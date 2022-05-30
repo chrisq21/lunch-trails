@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "Proxima Nova Regular";
+  src: url("../assets/fonts/proxima-nova-regular.woff");
+}
+
+@font-face {
+  font-family: "Proxima Nova Bold";
+  src: url("../assets/fonts/proxima-nova-bold.woff");
+}
