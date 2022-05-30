@@ -5,14 +5,18 @@ import List from "../components/list"
 import Map from "../components/map"
 import { GridContainer } from "./styles"
 
-const IndexPage = () => (
-  <Layout>
-    <GridContainer>
-      <Header />
-      <List />
-      <Map />
-    </GridContainer>
-  </Layout>
-)
+const IndexPage = () => {
+  const [places, setPlaces] = React.useState([])
+
+  return (
+    <Layout>
+      <GridContainer>
+        <Header />
+        <List places={places} />
+        <Map places={places} setPlaces={setPlaces} />
+      </GridContainer>
+    </Layout>
+  )
+}
 
 export default IndexPage
