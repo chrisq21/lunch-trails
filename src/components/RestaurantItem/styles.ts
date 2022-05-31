@@ -36,7 +36,6 @@ export const Text = styled.span`
 `
 
 export const StarsContainer = styled.div`
-  display: flex;
   margin: 5px 0;
 `
 

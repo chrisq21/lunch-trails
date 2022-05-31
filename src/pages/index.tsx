@@ -3,7 +3,7 @@ import Header from "../components/Header"
 import Layout from "../components/Layout"
 import RestaurantList from "../components/RestaurantList"
 import Map from "../components/Map"
-import { Restaurant } from "../shared-types"
+import { Restaurant } from "../types/shared-types"
 import { GridContainer } from "./styles"
 
 const IndexPage = () => {
