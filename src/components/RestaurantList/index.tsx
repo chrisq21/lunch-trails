@@ -10,9 +10,10 @@ import { getFavoritesFromLocalStorage } from "../utils/favoriteRestaurants"
 interface Props {
   restaurants: Restaurant[]
   sortOrder: SortOptions
+  activeRestaurantId: string | null
 }
 
-const RestaurantList = ({ restaurants, sortOrder }: Props) => {
+const RestaurantList = ({ restaurants, sortOrder, activeRestaurantId }: Props) => {
   const [favoriteRestaurantIds, setFavoriteRestaurantIds] = useState<string[]>(
     []
   )
@@ -32,6 +33,7 @@ const RestaurantList = ({ restaurants, sortOrder }: Props) => {
         <RestaurantItem
           key={uuidv4()}
           restaurant={restaurant}
+          isActive={restaurant.place_id === activeRestaurantId}
           isFavoriteRestaurant={favoriteRestaurantIds.includes(
             restaurant.place_id
           )}

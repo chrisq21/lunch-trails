@@ -25,12 +25,14 @@ interface Props {
   restaurant: Restaurant
   isFavoriteRestaurant: boolean
   setFavoriteRestaurantIds: Dispatch<SetStateAction<string[]>>
+  isActive: boolean
 }
 
 const RestaurantItem = ({
   restaurant,
   isFavoriteRestaurant,
   setFavoriteRestaurantIds,
+  isActive
 }: Props) => {
   const { name, rating, user_ratings_total, price_level, place_id } = restaurant
 
@@ -49,7 +51,7 @@ const RestaurantItem = ({
   }
 
   return (
-    <ItemContainer>
+    <ItemContainer isActive={isActive}>
       <InnerContainer>
         <div>Image</div>
         <DescriptionContainer>
