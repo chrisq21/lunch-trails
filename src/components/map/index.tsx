@@ -6,7 +6,7 @@ import { SFCoordinates } from "../../consts/map"
 import defaultIcon from "../../assets/images/marker-default.png"
 import activeIcon from "../../assets/images/marker-active.png"
 import clickedIcon from "../../assets/images/marker-clicked.png"
-
+  
 let map
 let service
 let google

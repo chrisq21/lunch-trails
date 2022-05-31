@@ -1,4 +1,11 @@
-import React, { Dispatch, SetStateAction, useState } from "react"
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 import { Restaurant } from "../../types/shared-types"
 
 import {
@@ -24,21 +31,21 @@ import heartSrc from "../../assets/images/heart.png"
 interface Props {
   restaurant: Restaurant
   isFavoriteRestaurant: boolean
+  isActive: boolean
   setFavoriteRestaurantIds: Dispatch<SetStateAction<string[]>>
   setActiveRestaurantId: Dispatch<SetStateAction<string>>
-  isActive: boolean
 }
 
 const RestaurantItem = ({
   restaurant,
   isFavoriteRestaurant,
-  setFavoriteRestaurantIds,
   isActive,
+  setFavoriteRestaurantIds,
   setActiveRestaurantId,
 }: Props) => {
   const { name, rating, user_ratings_total, price_level, place_id } = restaurant
 
-  const handleMouseOver = () => {
+  const handleMouseEnter = () => {
     // if (!isMarkerSelected && !isPopup) {
     setActiveRestaurantId(place_id)
     // }
@@ -67,7 +74,7 @@ const RestaurantItem = ({
   return (
     <ItemContainer
       isActive={isActive}
-      onMouseEnter={handleMouseOver}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <InnerContainer>

@@ -11,6 +11,7 @@ export const ItemContainer = styled.div<{ isActive: boolean }>`
   padding: 1rem;
   justify-content: space-between;
   border: 1px solid ${borderGray};
+  cursor: pointer;
 
   ${({ isActive }) =>
     isActive &&
@@ -24,7 +25,7 @@ export const ItemContainer = styled.div<{ isActive: boolean }>`
       bottom: 0;
       border: 2px solid ${green};
       border-radius: 8px;
-      cursor: pointer;
+      pointer-events: none
     }
   `}
 `
