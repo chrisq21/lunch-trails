@@ -28,6 +28,7 @@ const IndexPage = () => {
           restaurants={restaurants}
           sortOrder={sortOrder}
           activeRestaurantId={activeRestaurantId}
+          setActiveRestaurantId={setActiveRestaurantId}
         />
         <Map
           restaurants={restaurants}

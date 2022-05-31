@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { Restaurant } from "../../types/shared-types"
 import { ListContainer } from "./style"
 import { v4 as uuidv4 } from "uuid"
@@ -11,9 +11,15 @@ interface Props {
   restaurants: Restaurant[]
   sortOrder: SortOptions
   activeRestaurantId: string | null
+  setActiveRestaurantId: Dispatch<SetStateAction<string>>
 }
 
-const RestaurantList = ({ restaurants, sortOrder, activeRestaurantId }: Props) => {
+const RestaurantList = ({
+  restaurants,
+  sortOrder,
+  activeRestaurantId,
+  setActiveRestaurantId,
+}: Props) => {
   const [favoriteRestaurantIds, setFavoriteRestaurantIds] = useState<string[]>(
     []
   )
@@ -37,6 +43,7 @@ const RestaurantList = ({ restaurants, sortOrder, activeRestaurantId }: Props) =
           isFavoriteRestaurant={favoriteRestaurantIds.includes(
             restaurant.place_id
           )}
+          setActiveRestaurantId={setActiveRestaurantId}
           setFavoriteRestaurantIds={setFavoriteRestaurantIds}
         />
       ))}

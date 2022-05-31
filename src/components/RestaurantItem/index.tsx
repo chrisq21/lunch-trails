@@ -25,6 +25,7 @@ interface Props {
   restaurant: Restaurant
   isFavoriteRestaurant: boolean
   setFavoriteRestaurantIds: Dispatch<SetStateAction<string[]>>
+  setActiveRestaurantId: Dispatch<SetStateAction<string>>
   isActive: boolean
 }
 
@@ -32,9 +33,22 @@ const RestaurantItem = ({
   restaurant,
   isFavoriteRestaurant,
   setFavoriteRestaurantIds,
-  isActive
+  isActive,
+  setActiveRestaurantId,
 }: Props) => {
   const { name, rating, user_ratings_total, price_level, place_id } = restaurant
+
+  const handleMouseOver = () => {
+    // if (!isMarkerSelected && !isPopup) {
+    setActiveRestaurantId(place_id)
+    // }
+  }
+
+  const handleMouseLeave = () => {
+    // if (!isMarkerSelected && !isPopup) {
+    setActiveRestaurantId(null)
+    // }
+  }
 
   const handleFavoriteClicked = (restaurantId: string, isFavorite: boolean) => {
     let favoriteRestaurantIds = []
@@ -51,7 +65,11 @@ const RestaurantItem = ({
   }
 
   return (
-    <ItemContainer isActive={isActive}>
+    <ItemContainer
+      isActive={isActive}
+      onMouseEnter={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
+    >
       <InnerContainer>
         <div>Image</div>
         <DescriptionContainer>
