@@ -42,3 +42,7 @@ export const StarsContainer = styled.div`
 export const StarImg = styled.img`
   margin-right: 5px;
 `
+
+export const HeartImg = styled.img`
+  cursor: pointer;
+`

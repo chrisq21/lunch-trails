@@ -8,6 +8,7 @@ import {
   StarsContainer,
   Title,
   Text,
+  HeartImg,
 } from "./styles"
 
 import PriceLevel from "./priceLevel"
@@ -16,6 +17,9 @@ import {
   addFavoriteRestaurantIdToLocalStorage,
   removeFavoriteRestaurantIdFromLocalStorage,
 } from "../utils/favoriteRestaurants"
+
+import heartActiveSrc from "../../assets/images/heart-active.png"
+import heartSrc from "../../assets/images/heart.png"
 
 interface Props {
   restaurant: Restaurant
@@ -60,12 +64,13 @@ const RestaurantItem = ({
           </div>
         </DescriptionContainer>
       </InnerContainer>
-      <div
-        onClick={() => handleFavoriteClicked(place_id, isFavoriteRestaurant)}
-      >
-        Favorite
+      <div>
+        <HeartImg
+          src={isFavoriteRestaurant ? heartActiveSrc : heartSrc}
+          alt={isFavoriteRestaurant ? "favorited" : "not favorited"}
+          onClick={() => handleFavoriteClicked(place_id, isFavoriteRestaurant)}
+        />
       </div>
-      {isFavoriteRestaurant && <p>favorite!</p>}
     </ItemContainer>
   )
 }
