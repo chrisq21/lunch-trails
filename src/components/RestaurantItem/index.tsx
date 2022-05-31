@@ -30,11 +30,12 @@ import heartSrc from "../../assets/images/heart.png"
 
 interface Props {
   restaurant: Restaurant
-  isFavoriteRestaurant: boolean
-  isActive: boolean
-  isMarkerSelected: boolean
-  setFavoriteRestaurantIds: Dispatch<SetStateAction<string[]>>
-  setActiveRestaurantId: Dispatch<SetStateAction<string>>
+  isPopup?: boolean
+  isFavoriteRestaurant?: boolean
+  isActive?: boolean
+  isMarkerSelected?: boolean
+  setFavoriteRestaurantIds?: Dispatch<SetStateAction<string[]>>
+  setActiveRestaurantId?: Dispatch<SetStateAction<string>>
 }
 
 const RestaurantItem = ({
@@ -42,6 +43,7 @@ const RestaurantItem = ({
   isFavoriteRestaurant,
   isActive,
   isMarkerSelected,
+  isPopup = false,
   setFavoriteRestaurantIds,
   setActiveRestaurantId,
 }: Props) => {
@@ -49,13 +51,13 @@ const RestaurantItem = ({
 
   const handleMouseEnter = () => {
     if (!isMarkerSelected) {
-    setActiveRestaurantId(place_id)
+      setActiveRestaurantId(place_id)
     }
   }
 
   const handleMouseLeave = () => {
     if (!isMarkerSelected) {
-    setActiveRestaurantId(null)
+      setActiveRestaurantId(null)
     }
   }
 
@@ -73,11 +75,16 @@ const RestaurantItem = ({
     setFavoriteRestaurantIds(favoriteRestaurantIds)
   }
 
+  // Add listeners only if this item is not a map popup.
+  const containerListeners = !isPopup
+    ? { onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave }
+    : {}
+
   return (
     <ItemContainer
       isActive={isActive}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      isPopup={isPopup}
+      {...containerListeners}
     >
       <InnerContainer>
         <div>Image</div>
@@ -93,13 +100,17 @@ const RestaurantItem = ({
           </div>
         </DescriptionContainer>
       </InnerContainer>
-      <div>
-        <HeartImg
-          src={isFavoriteRestaurant ? heartActiveSrc : heartSrc}
-          alt={isFavoriteRestaurant ? "favorited" : "not favorited"}
-          onClick={() => handleFavoriteClicked(place_id, isFavoriteRestaurant)}
-        />
-      </div>
+      {!isPopup && (
+        <div>
+          <HeartImg
+            src={isFavoriteRestaurant ? heartActiveSrc : heartSrc}
+            alt={isFavoriteRestaurant ? "favorited" : "not favorited"}
+            onClick={() =>
+              handleFavoriteClicked(place_id, isFavoriteRestaurant)
+            }
+          />
+        </div>
+      )}
     </ItemContainer>
   )
 }

@@ -2,12 +2,15 @@ import styled from "styled-components"
 import { borderGray, green } from "../../styles/colors"
 import { boldTextStyles, lightTextStyles } from "../../styles/shared"
 
-export const ItemContainer = styled.div<{ isActive: boolean }>`
+export const ItemContainer = styled.div<{
+  isActive: boolean
+  isPopup: boolean
+}>`
   position: relative;
   display: flex;
   border-radius: 8px;
   background: white;
-  margin-bottom: 0.75rem;
+  margin-bottom: ${({ isPopup }) => (isPopup ? 0 : '0.75rem')};
   padding: 1rem;
   justify-content: space-between;
   border: 1px solid ${borderGray};

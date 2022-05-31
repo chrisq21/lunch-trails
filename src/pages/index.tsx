@@ -36,6 +36,7 @@ const IndexPage = () => {
           restaurants={restaurants}
           activeRestaurantId={activeRestaurantId}
           searchQuery={searchQuery}
+          isMarkerSelected={isMarkerSelected}
           setRestaurants={setRestaurants}
           setActiveRestaurantId={setActiveRestaurantId}
           setIsMarkerSelected={setIsMarkerSelected}

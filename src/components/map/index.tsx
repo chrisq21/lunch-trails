@@ -6,16 +6,20 @@ import { SFCoordinates } from "../../consts/map"
 import defaultIcon from "../../assets/images/marker-default.png"
 import activeIcon from "../../assets/images/marker-active.png"
 import clickedIcon from "../../assets/images/marker-clicked.png"
+import createPopupClass from "./createPopupClass"
+import RestaurantItem from "../restaurantItem"
 
 let map
 let service
 let google
 let markers = []
+let popup
 
 interface Props {
   restaurants: Restaurant[]
   searchQuery: string
   activeRestaurantId: string | null
+  isMarkerSelected: boolean
   setRestaurants: Dispatch<SetStateAction<Restaurant[]>>
   setActiveRestaurantId: Dispatch<SetStateAction<string>>
   setIsMarkerSelected: Dispatch<SetStateAction<boolean>>
@@ -25,6 +29,7 @@ const Map = ({
   restaurants,
   searchQuery,
   activeRestaurantId,
+  isMarkerSelected,
   setRestaurants,
   setActiveRestaurantId,
   setIsMarkerSelected,
@@ -33,6 +38,13 @@ const Map = ({
 
   // Create Map Instance.
   useEffect(() => {
+    let mapClickListener
+
+    const openMarkerInfo = (place, marker) => {
+      popup.setMap(map)
+      popup.position = marker.position
+    }
+
     const initMap = async () => {
       const loader = new Loader({
         apiKey: process.env.PLACES_API_KEY,
@@ -57,10 +69,15 @@ const Map = ({
 
         service = new google.maps.places.PlacesService(map)
 
+        const Popup = createPopupClass(google)
+        popup = new Popup(defaultCenter, document.getElementById("content"))
+        popup.setMap(null)
+
         // De-activate marker selection when map is clicked.
-        map.addListener("click", () => {
+        mapClickListener = map.addListener("click", () => {
           setIsMarkerSelected(false)
           setActiveRestaurantId(null)
+          popup.setMap(null)
         })
 
         setIsLoaded(true)
@@ -71,6 +88,11 @@ const Map = ({
     }
 
     initMap()
+
+    // Remove map click listener when un-mounting
+    return () => {
+      google.maps.event.removeListener(mapClickListener)
+    }
   }, [])
 
   // Request restaurants from PlacesService & update restaurants state.
@@ -121,6 +143,8 @@ const Map = ({
 
         google.maps.event.addListener(marker, "click", () => {
           marker.clicked = true
+          popup.setMap(map)
+          popup.position = marker.position
           setIsMarkerSelected(true)
           setActiveRestaurantId(restaurant.place_id)
         })
@@ -153,8 +177,22 @@ const Map = ({
     }
   }, [isLoaded, activeRestaurantId])
 
+  const getPopupItem = () => {
+    const restaurant = restaurants.find(({ place_id }) => activeRestaurantId === place_id)
+
+    return (
+      restaurant && (
+        <RestaurantItem
+          isPopup
+          restaurant={restaurant}
+        />
+      )
+    )
+  }
+
   return (
     <>
+    <div id="content">{isMarkerSelected && getPopupItem()}</div>
       <MapOuterContainer>
         <MapContainer id="map">Map</MapContainer>
       </MapOuterContainer>
