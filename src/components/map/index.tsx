@@ -11,9 +11,10 @@ let markers = []
 
 interface Props {
   restaurants: Restaurant[]
-  setRestaurants: Dispatch<SetStateAction<Restaurant[]>>
+  setRestaurants: Dispatch<SetStateAction<Restaurant[]>>;
+  searchQuery: string
 }
-const Map = ({ restaurants, setRestaurants }: Props) => {
+const Map = ({ restaurants, setRestaurants, searchQuery }: Props) => {
   const [isLoaded, setIsLoaded] = useState<Boolean>(false)
 
   // Create Map Instance
@@ -55,7 +56,7 @@ const Map = ({ restaurants, setRestaurants }: Props) => {
   // Request restaurants from PlacesService & update restaurants state
   useEffect(() => {
     if (isLoaded) {
-      const getRestaurants = keyword => {
+      const getRestaurants = (keyword: string) => {
         const request = {
           location: map.getCenter(),
           radius: 1500,
@@ -75,9 +76,9 @@ const Map = ({ restaurants, setRestaurants }: Props) => {
           console.error(error)
         }
       }
-      getRestaurants("")
+      getRestaurants(searchQuery)
     }
-  }, [isLoaded])
+  }, [isLoaded, searchQuery])
 
   return (
     <>
