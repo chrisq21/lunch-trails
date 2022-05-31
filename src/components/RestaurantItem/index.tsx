@@ -10,32 +10,11 @@ import {
   Text,
 } from "./styles"
 
-import starDefaultSrc from '../../assets/images/star.png'
-import starActiveSrc from '../../assets/images/star-active.png'
+import PriceLevel from './priceLevel'
+import StarRating from "./starRating"
 
 interface Props {
   restaurant: Restaurant
-}
-
-const renderStars = numActive => {
-  let stars = []
-  for (let i = 0; i < 5; i++) {
-    const isActiveStar = i < Math.floor(numActive)
-    const starSrc = isActiveStar
-      ? starActiveSrc
-      : starDefaultSrc
-    stars.push(<img key={i} src={starSrc} alt="star" />)
-  }
-  return stars
-}
-
-const renderPriceLevel = numDollarSigns => {
-  let dollarSigns = []
-  for (let i = 0; i < numDollarSigns; i++) {
-    dollarSigns.push(<Text key={i}>$</Text>)
-  }
-
-  return dollarSigns
 }
 
 const RestaurantItem = ({ restaurant }: Props) => {
@@ -47,11 +26,11 @@ const RestaurantItem = ({ restaurant }: Props) => {
         <DescriptionContainer>
           <Title>{name}</Title>
           <StarsContainer>
-            {renderStars(rating)}
+            <StarRating numActiveStars={rating} />
             <Text>({user_ratings_total})</Text>
           </StarsContainer>
           <div>
-            {renderPriceLevel(price_level)}
+            <PriceLevel numDollarSigns={price_level} />
             <Text> • Supporting Text</Text>
           </div>
         </DescriptionContainer>
