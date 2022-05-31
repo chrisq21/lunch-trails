@@ -3,6 +3,9 @@ import { Restaurant } from "../../types/shared-types"
 import { MapOuterContainer, MapContainer } from "./styles"
 import { Loader } from "@googlemaps/js-api-loader"
 import { SFCoordinates } from "../../consts/map"
+import defaultIcon from "../../assets/images/marker-default.png"
+import activeIcon from "../../assets/images/marker-active.png"
+import clickedIcon from "../../assets/images/marker-clicked.png"
 
 let map
 let service
@@ -11,15 +14,14 @@ let markers = []
 
 interface Props {
   restaurants: Restaurant[]
-  setRestaurants: Dispatch<SetStateAction<Restaurant[]>>;
+  setRestaurants: Dispatch<SetStateAction<Restaurant[]>>
   searchQuery: string
 }
 const Map = ({ restaurants, setRestaurants, searchQuery }: Props) => {
   const [isLoaded, setIsLoaded] = useState<Boolean>(false)
 
-  // Create Map Instance
+  // Create Map Instance.
   useEffect(() => {
-
     const initMap = async () => {
       const loader = new Loader({
         apiKey: process.env.PLACES_API_KEY,
@@ -53,7 +55,7 @@ const Map = ({ restaurants, setRestaurants, searchQuery }: Props) => {
     initMap()
   }, [])
 
-  // Request restaurants from PlacesService & update restaurants state
+  // Request restaurants from PlacesService & update restaurants state.
   useEffect(() => {
     if (isLoaded) {
       const getRestaurants = (keyword: string) => {
@@ -79,6 +81,31 @@ const Map = ({ restaurants, setRestaurants, searchQuery }: Props) => {
       getRestaurants(searchQuery)
     }
   }, [isLoaded, searchQuery])
+
+  useEffect(() => {
+    const createMarkers = () => {
+      markers.forEach(marker => {
+        marker.setMap(null)
+      })
+      markers = []
+
+      restaurants.forEach(restaurant => {
+        if (!restaurant?.geometry?.location) return
+
+        const marker = new google.maps.Marker({
+          map,
+          position: restaurant.geometry.location,
+          icon: defaultIcon,
+          placeId: restaurant.place_id,
+          clicked: false,
+        })
+
+        markers.push(marker)
+      })
+    }
+
+    createMarkers()
+  }, [isLoaded, restaurants])
 
   return (
     <>
