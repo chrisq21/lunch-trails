@@ -47,7 +47,7 @@ const Header = ({ setSearchQuery, setSortOrder }: Props) => {
           {shouldShowModal && (
             <SortModal applySortOrder={handleApplySortOrder} />
           )}
-          <SortButton onClick={() => setShouldShowModal(!shouldShowModal)}>
+          <SortButton onClick={() => setShouldShowModal(!shouldShowModal)} isActive={shouldShowModal}>
             Sort
           </SortButton>
         </SortButtonContainer>

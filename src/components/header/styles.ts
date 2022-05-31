@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import searchIconSrc from "../../assets/images/search.png"
+import { green } from "../../styles/colors"
 import {
   inputStyles,
   boldTextStyles,
@@ -43,12 +44,19 @@ export const SearchBar = styled.input`
   outline: none;
 `
 
-export const SortButton = styled.button`
+export const SortButton = styled.button<{ isActive: boolean }>`
   ${inputStyles};
   ${defaultTextStyles};
 
   cursor: pointer;
   margin: 0px 1rem;
+
+  ${({ isActive }) =>
+    isActive &&
+    `
+    background: ${green};
+    color: white;
+  `}
 `
 
 export const SortButtonContainer = styled.div`
