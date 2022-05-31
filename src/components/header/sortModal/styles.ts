@@ -7,6 +7,7 @@ import {
   lightTextStyles,
 } from "../../../styles/shared"
 import FormControlLabel from "@mui/material/FormControlLabel"
+import { mobileBreakpoint } from "../../../consts/breakpoints"
 
 export const SortModalContainer = styled.div`
   ${inputStyles};
@@ -17,6 +18,11 @@ export const SortModalContainer = styled.div`
   z-index: 3;
   box-shadow: 0px 2px 4px rgba(0, 2, 4, 0.2);
   right: 0px;
+
+
+  @media only screen and (max-width: ${mobileBreakpoint}px) {
+    left: 0;
+  }
 `
 export const RadioButtonContainer = styled.div`
   display: flex;

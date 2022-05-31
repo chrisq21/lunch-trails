@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { mobileBreakpoint, mediumDesktop } from "../consts/breakpoints"
 import { green } from "../styles/colors"
-import { boldTextStyles, inputStyles } from "../styles/shared"
+import { inputStyles } from "../styles/shared"
 
 import listIconSrc from "../assets/images/list-icon.png"
 import mapIconSrc from "../assets/images/map-icon.png"
@@ -13,7 +13,7 @@ export const GridContainer = styled.div<{ shouldShowList: boolean }>`
   grid-template-areas:
     "header header"
     "list map";
-  grid-template-rows: 5rem auto;
+  grid-template-rows: auto auto;
   grid-template-columns: 33% auto;
 
   @media only screen and (max-width: ${mediumDesktop}px) {

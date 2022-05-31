@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import searchIconSrc from "../../assets/images/search.png"
+import { mobileBreakpoint } from "../../consts/breakpoints"
 import { green } from "../../styles/colors"
 import {
   inputStyles,
@@ -14,15 +15,31 @@ export const HeaderContainer = styled.header`
   align-items: center;
   padding: 0.5rem 2.5rem;
   box-shadow: 0px 2px 4px rgba(0, 2, 4, 0.2);
+
+  @media only screen and (max-width: ${mobileBreakpoint}px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 `
 
 export const LogoImg = styled.img`
   height: 4rem;
+
+  @media only screen and (max-width: ${mobileBreakpoint}px) {
+    height: 3rem;
+  }
 `
 export const InputsContainer = styled.div`
   display: flex;
   flex-grow: 1;
   max-width: 500px;
+
+  @media only screen and (max-width: ${mobileBreakpoint}px) {
+    max-width: none;
+    width: 100%;
+    margin: 0.5rem 0;
+  }
 `
 
 export const SearchBar = styled.input`
@@ -57,6 +74,10 @@ export const SortButton = styled.button<{ isActive: boolean }>`
     background: ${green};
     color: white;
   `}
+
+  @media only screen and (max-width: ${mobileBreakpoint}px) {
+    margin-left: 0;
+  }
 `
 
 export const SortButtonContainer = styled.div`
