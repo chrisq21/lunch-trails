@@ -4,40 +4,53 @@ import {
   InputsContainer,
   SortButton,
   SearchBar,
+  SortButtonContainer,
+  ModalBackgroundContainer,
 } from "./styles"
-import React, {
-  useEffect,
-  useState,
-  Dispatch,
-  SetStateAction,
-  useMemo,
-} from "react"
-import logoSrc from "../../assets/images/logo.png"
+
+import React, { Dispatch, SetStateAction, useState } from "react"
+import SortModal from "./sortModal"
 import debounce from "lodash.debounce"
+import logoSrc from "../../assets/images/logo.png"
 
 interface Props {
-  searchQuery: string
-  setSearchQuery: Dispatch<SetStateAction<string>>
+  setSearchQuery: Dispatch<SetStateAction<string>>;
+  setShouldSortAscending: Dispatch<SetStateAction<boolean>>;
 }
 
-const Header = ({ searchQuery, setSearchQuery }: Props) => {
-  
+const Header = ({ setSearchQuery, setShouldSortAscending }: Props) => {
+  const [shouldShowModal, setShouldShowModal] = useState<boolean>(false)
+
   const handleSearchChange = event => {
-    if (event.target.value) {
-      setSearchQuery(event.target.value)
-    }
+    setSearchQuery(event.target.value)
+  }
+
+  const handleApplySortOrder = (shouldSortAscending: boolean) => {
+    setShouldShowModal(false)
+    setShouldSortAscending(shouldSortAscending)
   }
 
   const debouncedHandleSearchChange = React.useMemo(
     () => debounce(handleSearchChange, 500),
     []
   )
-
+  
+  
   return (
     <HeaderContainer>
+      {shouldShowModal && (
+        <ModalBackgroundContainer onClick={() => setShouldShowModal(false)} />
+      )}
       <LogoImg src={logoSrc} />
       <InputsContainer>
-        <SortButton>Sort</SortButton>
+        <SortButtonContainer>
+          {shouldShowModal && (
+            <SortModal applySortOrder={handleApplySortOrder} />
+          )}
+          <SortButton onClick={() => setShouldShowModal(!shouldShowModal)}>
+            Sort
+          </SortButton>
+        </SortButtonContainer>
         <SearchBar
           type={"text"}
           placeholder="Search for a restaurant"

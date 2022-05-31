@@ -9,13 +9,18 @@ import { GridContainer } from "./styles"
 const IndexPage = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([])
   const [searchQuery, setSearchQuery] = useState<string>("")
+  const [shouldSortAscending, setShouldSortAscending] = useState<boolean>(false)
 
   return (
     <Layout>
       <GridContainer>
-        <Header setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
+        <Header setSearchQuery={setSearchQuery} setShouldSortAscending={setShouldSortAscending} />
         <RestaurantList restaurants={restaurants} />
-        <Map restaurants={restaurants} setRestaurants={setRestaurants} searchQuery={searchQuery} />
+        <Map
+          restaurants={restaurants}
+          setRestaurants={setRestaurants}
+          searchQuery={searchQuery}
+        />
       </GridContainer>
     </Layout>
   )

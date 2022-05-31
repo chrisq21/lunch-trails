@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import searchIconSrc from '../../assets/images/search.png'
+import searchIconSrc from "../../assets/images/search.png"
 import {
   inputStyles,
   boldTextStyles,
@@ -24,13 +24,6 @@ export const InputsContainer = styled.div`
   max-width: 500px;
 `
 
-export const SortButton = styled.button`
-  ${inputStyles};
-  ${defaultTextStyles};
-
-  margin: 0px 1rem;
-`
-
 export const SearchBar = styled.input`
   ${inputStyles};
   ${boldTextStyles};
@@ -48,4 +41,26 @@ export const SearchBar = styled.input`
   background: url(${searchIconSrc}) center right no-repeat;
   background-size: 2.5rem auto;
   outline: none;
+`
+
+export const SortButton = styled.button`
+  ${inputStyles};
+  ${defaultTextStyles};
+
+  cursor: pointer;
+  margin: 0px 1rem;
+`
+
+export const SortButtonContainer = styled.div`
+  position: relative;
+`
+
+export const ModalBackgroundContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 2;
 `
