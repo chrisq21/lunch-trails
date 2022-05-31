@@ -1,4 +1,4 @@
-import * as React from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
 import { Restaurant } from "../../types/shared-types"
 
 import {
@@ -10,15 +10,40 @@ import {
   Text,
 } from "./styles"
 
-import PriceLevel from './priceLevel'
+import PriceLevel from "./priceLevel"
 import StarRating from "./starRating"
+import {
+  addFavoriteRestaurantIdToLocalStorage,
+  removeFavoriteRestaurantIdFromLocalStorage,
+} from "../utils/favoriteRestaurants"
 
 interface Props {
   restaurant: Restaurant
+  isFavoriteRestaurant: boolean
+  setFavoriteRestaurantIds: Dispatch<SetStateAction<string[]>>
 }
 
-const RestaurantItem = ({ restaurant }: Props) => {
-  const { name, rating, user_ratings_total, price_level, price_id } = restaurant
+const RestaurantItem = ({
+  restaurant,
+  isFavoriteRestaurant,
+  setFavoriteRestaurantIds,
+}: Props) => {
+  const { name, rating, user_ratings_total, price_level, place_id } = restaurant
+
+  const handleFavoriteClicked = (restaurantId: string, isFavorite: boolean) => {
+    let favoriteRestaurantIds = []
+    if (isFavorite) {
+      favoriteRestaurantIds =
+        removeFavoriteRestaurantIdFromLocalStorage(restaurantId)
+    } else {
+      favoriteRestaurantIds =
+        addFavoriteRestaurantIdToLocalStorage(restaurantId)
+    }
+
+    // Update favorite restaurants state.
+    setFavoriteRestaurantIds(favoriteRestaurantIds)
+  }
+
   return (
     <ItemContainer>
       <InnerContainer>
@@ -35,7 +60,12 @@ const RestaurantItem = ({ restaurant }: Props) => {
           </div>
         </DescriptionContainer>
       </InnerContainer>
-      <div>Favorite</div>
+      <div
+        onClick={() => handleFavoriteClicked(place_id, isFavoriteRestaurant)}
+      >
+        Favorite
+      </div>
+      {isFavoriteRestaurant && <p>favorite!</p>}
     </ItemContainer>
   )
 }
