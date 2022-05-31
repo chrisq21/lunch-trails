@@ -1,12 +1,15 @@
 import * as React from "react"
-import { Place } from "../../shared-types"
+import { Restaurant } from "../../shared-types"
 import { ListContainer } from "./style"
+import { v4 as uuidv4 } from 'uuid';
 
-const List = ({ places }: { places: Place[] }) => {
+const List = ({ restaurants }: { restaurants: Restaurant[] }) => {
   return (
     <ListContainer>
-      {places.map((place) => (
-        <p>Place</p>
+      {restaurants.map(({ name }) => (
+        <div key={uuidv4()}>
+        <p>{name}</p>
+        </div>
       ))}
     </ListContainer>
   )

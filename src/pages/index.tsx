@@ -1,19 +1,20 @@
-import * as React from "react"
+import React, { useState } from "react"
 import Header from "../components/header"
 import Layout from "../components/layout"
 import List from "../components/list"
 import Map from "../components/map"
+import { Restaurant } from "../shared-types"
 import { GridContainer } from "./styles"
 
 const IndexPage = () => {
-  const [places, setPlaces] = React.useState([])
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([])
 
   return (
     <Layout>
       <GridContainer>
         <Header />
-        <List places={places} />
-        <Map places={places} setPlaces={setPlaces} />
+        <List restaurants={restaurants} />
+        <Map restaurants={restaurants} setRestaurants={setRestaurants} />
       </GridContainer>
     </Layout>
   )
