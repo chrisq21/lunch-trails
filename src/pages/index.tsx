@@ -15,7 +15,7 @@ const IndexPage = () => {
     <Layout>
       <GridContainer>
         <Header setSearchQuery={setSearchQuery} setShouldSortAscending={setShouldSortAscending} />
-        <RestaurantList restaurants={restaurants} />
+        <RestaurantList restaurants={restaurants} shouldSortAscending={shouldSortAscending} />
         <Map
           restaurants={restaurants}
           setRestaurants={setRestaurants}
