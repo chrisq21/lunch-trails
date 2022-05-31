@@ -3,7 +3,7 @@ import { Restaurant } from "../../shared-types"
 import { ListContainer } from "./style"
 import { v4 as uuidv4 } from 'uuid';
 
-const List = ({ restaurants }: { restaurants: Restaurant[] }) => {
+const RestaurantList = ({ restaurants }: { restaurants: Restaurant[] }) => {
   return (
     <ListContainer>
       {restaurants.map(({ name }) => (
@@ -15,4 +15,4 @@ const List = ({ restaurants }: { restaurants: Restaurant[] }) => {
   )
 }
 
-export default List
+export default RestaurantList

@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-import Header from "../components/header"
-import Layout from "../components/layout"
-import List from "../components/list"
-import Map from "../components/map"
+import Header from "../components/Header"
+import Layout from "../components/Layout"
+import RestaurantList from "../components/RestaurantList"
+import Map from "../components/Map"
 import { Restaurant } from "../shared-types"
 import { GridContainer } from "./styles"
 
@@ -13,7 +13,7 @@ const IndexPage = () => {
     <Layout>
       <GridContainer>
         <Header />
-        <List restaurants={restaurants} />
+        <RestaurantList restaurants={restaurants} />
         <Map restaurants={restaurants} setRestaurants={setRestaurants} />
       </GridContainer>
     </Layout>
