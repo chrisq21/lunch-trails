@@ -6,8 +6,6 @@ import Map from "../components/map"
 import { Restaurant } from "../types/shared-types"
 import { GridContainer, ToggleButton, ToggleButtonContainer } from "./styles"
 import { SortOptions } from "../consts/sortOptions"
-import listIconSrc from "../assets/images/list-icon.png"
-import mapIconSrc from "../assets/images/list-icon.png"
 
 const IndexPage = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([])
@@ -32,11 +30,10 @@ const IndexPage = () => {
           searchQuery={searchQuery}
         />
         <ToggleButtonContainer>
-          <ToggleButton shouldShowMapImg={shouldShowList} onClick={() => setShouldShowList(!shouldShowList)}>
-            {/* <img
-              src={shouldShowList ? listIconSrc : mapIconSrc}
-              alt={shouldShowList ? "Map" : "List"}
-            /> */}
+          <ToggleButton
+            shouldShowMapImg={shouldShowList}
+            onClick={() => setShouldShowList(!shouldShowList)}
+          >
             {shouldShowList ? "Map" : "List"}
           </ToggleButton>
         </ToggleButtonContainer>
