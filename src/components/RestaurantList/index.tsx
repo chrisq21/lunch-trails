@@ -11,6 +11,7 @@ interface Props {
   restaurants: Restaurant[]
   sortOrder: SortOptions
   activeRestaurantId: string | null
+  isMarkerSelected: boolean
   setActiveRestaurantId: Dispatch<SetStateAction<string>>
 }
 
@@ -18,6 +19,7 @@ const RestaurantList = ({
   restaurants,
   sortOrder,
   activeRestaurantId,
+  isMarkerSelected,
   setActiveRestaurantId,
 }: Props) => {
   const [favoriteRestaurantIds, setFavoriteRestaurantIds] = useState<string[]>(
@@ -43,6 +45,7 @@ const RestaurantList = ({
           isFavoriteRestaurant={favoriteRestaurantIds.includes(
             restaurant.place_id
           )}
+          isMarkerSelected={isMarkerSelected}
           setActiveRestaurantId={setActiveRestaurantId}
           setFavoriteRestaurantIds={setFavoriteRestaurantIds}
         />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Header from "../components/header"
 import Layout from "../components/layout"
 import RestaurantList from "../components/restaurantList"
@@ -15,6 +15,7 @@ const IndexPage = () => {
   )
   const [shouldShowList, setShouldShowList] = useState<boolean>(true)
   const [activeRestaurantId, setActiveRestaurantId] = useState<string>(null)
+  const [isMarkerSelected, setIsMarkerSelected] = React.useState(false)
 
   return (
     <Layout>
@@ -28,14 +29,16 @@ const IndexPage = () => {
           restaurants={restaurants}
           sortOrder={sortOrder}
           activeRestaurantId={activeRestaurantId}
+          isMarkerSelected={isMarkerSelected}
           setActiveRestaurantId={setActiveRestaurantId}
         />
         <Map
           restaurants={restaurants}
+          activeRestaurantId={activeRestaurantId}
+          searchQuery={searchQuery}
           setRestaurants={setRestaurants}
           setActiveRestaurantId={setActiveRestaurantId}
-          searchQuery={searchQuery}
-          activeRestaurantId={activeRestaurantId}
+          setIsMarkerSelected={setIsMarkerSelected}
         />
         <ToggleButtonContainer>
           <ToggleButton

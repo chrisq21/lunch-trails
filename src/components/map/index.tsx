@@ -6,7 +6,7 @@ import { SFCoordinates } from "../../consts/map"
 import defaultIcon from "../../assets/images/marker-default.png"
 import activeIcon from "../../assets/images/marker-active.png"
 import clickedIcon from "../../assets/images/marker-clicked.png"
-  
+
 let map
 let service
 let google
@@ -14,17 +14,20 @@ let markers = []
 
 interface Props {
   restaurants: Restaurant[]
-  setRestaurants: Dispatch<SetStateAction<Restaurant[]>>
-  setActiveRestaurantId: Dispatch<SetStateAction<string>>
   searchQuery: string
   activeRestaurantId: string | null
+  setRestaurants: Dispatch<SetStateAction<Restaurant[]>>
+  setActiveRestaurantId: Dispatch<SetStateAction<string>>
+  setIsMarkerSelected: Dispatch<SetStateAction<boolean>>
 }
+
 const Map = ({
   restaurants,
-  setRestaurants,
-  setActiveRestaurantId,
   searchQuery,
   activeRestaurantId,
+  setRestaurants,
+  setActiveRestaurantId,
+  setIsMarkerSelected,
 }: Props) => {
   const [isLoaded, setIsLoaded] = useState<Boolean>(false)
 
@@ -53,6 +56,13 @@ const Map = ({
         })
 
         service = new google.maps.places.PlacesService(map)
+
+        // De-activate marker selection when map is clicked.
+        map.addListener("click", () => {
+          setIsMarkerSelected(false)
+          setActiveRestaurantId(null)
+        })
+
         setIsLoaded(true)
       } catch (error) {
         // Send error data to error reporter.
@@ -111,6 +121,7 @@ const Map = ({
 
         google.maps.event.addListener(marker, "click", () => {
           marker.clicked = true
+          setIsMarkerSelected(true)
           setActiveRestaurantId(restaurant.place_id)
         })
 
