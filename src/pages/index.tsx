@@ -10,12 +10,18 @@ import { SortOptions } from "../consts/sortOptions"
 const IndexPage = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([])
   const [searchQuery, setSearchQuery] = useState<string>("")
-  const [sortOrder, setSortOrder] = useState<SortOptions>(SortOptions.Descending)
+  const [sortOrder, setSortOrder] = useState<SortOptions>(
+    SortOptions.Descending
+  )
 
   return (
     <Layout>
       <GridContainer>
-        <Header setSearchQuery={setSearchQuery} setSortOrder={setSortOrder} />
+        <Header
+          setSearchQuery={setSearchQuery}
+          setSortOrder={setSortOrder}
+          sortOrder={sortOrder}
+        />
         <RestaurantList restaurants={restaurants} sortOrder={sortOrder} />
         <Map
           restaurants={restaurants}

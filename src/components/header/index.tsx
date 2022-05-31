@@ -17,9 +17,10 @@ import { SortOptions } from "../../consts/sortOptions"
 interface Props {
   setSearchQuery: Dispatch<SetStateAction<string>>
   setSortOrder: Dispatch<SetStateAction<SortOptions>>
+  sortOrder: SortOptions
 }
 
-const Header = ({ setSearchQuery, setSortOrder }: Props) => {
+const Header = ({ setSearchQuery, setSortOrder, sortOrder }: Props) => {
   const [shouldShowModal, setShouldShowModal] = useState<boolean>(false)
 
   const handleSearchChange = event => {
@@ -45,9 +46,15 @@ const Header = ({ setSearchQuery, setSortOrder }: Props) => {
       <InputsContainer>
         <SortButtonContainer>
           {shouldShowModal && (
-            <SortModal applySortOrder={handleApplySortOrder} />
+            <SortModal
+              applySortOrder={handleApplySortOrder}
+              sortOrder={sortOrder}
+            />
           )}
-          <SortButton onClick={() => setShouldShowModal(!shouldShowModal)} isActive={shouldShowModal}>
+          <SortButton
+            onClick={() => setShouldShowModal(!shouldShowModal)}
+            isActive={shouldShowModal}
+          >
             Sort
           </SortButton>
         </SortButtonContainer>

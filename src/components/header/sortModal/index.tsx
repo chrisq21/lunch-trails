@@ -14,16 +14,15 @@ import { SortOptions } from "../../../consts/sortOptions"
 
 interface Props {
   applySortOrder: (sortOrder: SortOptions) => void
+  sortOrder: SortOptions
 }
 
 const CheckedIcon = () => <img src={radioCheckedSrc} alt="checked" />
 const UncheckedIcon = () => <img src={radioUncheckedSrc} alt="un-checked" />
 
-const SortModal = ({ applySortOrder }: Props) => {
+const SortModal = ({ applySortOrder, sortOrder }: Props) => {
   // Modifying localSortOrder is used only to update SortModal's UI.
-  const [localSortOrder, setLocalSortOrder] = useState<SortOptions>(
-    SortOptions.Descending
-  )
+  const [localSortOrder, setLocalSortOrder] = useState<SortOptions>(sortOrder)
 
   const handleChange = e => {
     setLocalSortOrder(e.target.value)
@@ -33,7 +32,7 @@ const SortModal = ({ applySortOrder }: Props) => {
     <SortModalContainer>
       <RadioGroup
         onChange={handleChange}
-        defaultValue={SortOptions.Descending}
+        defaultValue={sortOrder}
         name="radio-buttons-group"
       >
         <RadioLabel
