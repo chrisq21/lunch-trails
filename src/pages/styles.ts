@@ -13,7 +13,7 @@ export const GridContainer = styled.div<{ shouldShowList: boolean }>`
   grid-template-areas:
     "header header"
     "list map";
-  grid-template-rows: auto auto;
+  grid-template-rows: 5rem auto;
   grid-template-columns: 33% auto;
 
   @media only screen and (max-width: ${mediumDesktop}px) {
@@ -26,6 +26,7 @@ export const GridContainer = styled.div<{ shouldShowList: boolean }>`
   // either the list or map area takes up 100% of the content below the header.
   @media only screen and (max-width: ${mobileBreakpoint}px) {
     & {
+      grid-template-rows: 8rem auto;
       ${({ shouldShowList }) =>
         shouldShowList
           ? `grid-template-columns: 100% 0;`

@@ -65,6 +65,7 @@ export const SortButton = styled.button<{ isActive: boolean }>`
   ${inputStyles};
   ${defaultTextStyles};
 
+  height: 100%;
   cursor: pointer;
   margin: 0px 1rem;
 
