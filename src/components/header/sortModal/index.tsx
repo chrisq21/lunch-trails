@@ -1,53 +1,60 @@
-import React, { Dispatch, SetStateAction, useState } from "react"
+import React, { useState } from "react"
 import {
   SortModalContainer,
-  RadioButtonContainer,
-  RadioImg,
   ApplyButtonContainer,
   ApplyButton,
-  RadioText,
+  RadioLabel,
 } from "./styles"
 import radioCheckedSrc from "../../../assets/images/radio-checked.png"
 import radioUncheckedSrc from "../../../assets/images/radio-unchecked.png"
 
+import Radio from "@mui/material/Radio"
+import RadioGroup from "@mui/material/RadioGroup"
+import { SortOptions } from "../../../consts/sortOptions"
+
 interface Props {
-  applySortOrder: (shouldSortAscending: boolean) => void
+  applySortOrder: (sortOrder: SortOptions) => void
 }
 
+const CheckedIcon = () => <img src={radioCheckedSrc} alt="checked" />
+const UncheckedIcon = () => <img src={radioUncheckedSrc} alt="un-checked" />
+
 const SortModal = ({ applySortOrder }: Props) => {
-  const [shouldSortAscending, setShouldSortAscending] = useState<boolean>(false)
+  // Modifying localSortOrder is used only to update SortModal's UI.
+  const [localSortOrder, setLocalSortOrder] = useState<SortOptions>(
+    SortOptions.Descending
+  )
+
+  const handleChange = e => {
+    setLocalSortOrder(e.target.value)
+  }
 
   return (
-    <SortModalContainer role={"radiogroup"}>
-      {/* Descending order option */}
-      <RadioButtonContainer
-        onClick={() => setShouldSortAscending(false)}
-        role={"radio"}
-        aria-checked={!shouldSortAscending}
+    <SortModalContainer>
+      <RadioGroup
+        onChange={handleChange}
+        defaultValue={SortOptions.Descending}
+        name="radio-buttons-group"
       >
-        <RadioImg
-          src={shouldSortAscending ? radioUncheckedSrc : radioCheckedSrc}
+        <RadioLabel
+          value={SortOptions.Descending}
+          control={
+            <Radio checkedIcon={<CheckedIcon />} icon={<UncheckedIcon />} />
+          }
+          label="Ratings High to Low"
         />
-        <RadioText>Ratings High to Low</RadioText>
-      </RadioButtonContainer>
-
-      {/* Ascending order option */}
-      <RadioButtonContainer
-        role={"radio"}
-        aria-checked={!!shouldSortAscending}
-        onClick={() => setShouldSortAscending(true)}
-      >
-        <RadioImg
-          src={!shouldSortAscending ? radioUncheckedSrc : radioCheckedSrc}
+        <RadioLabel
+          value={SortOptions.Ascending}
+          control={
+            <Radio checkedIcon={<CheckedIcon />} icon={<UncheckedIcon />} />
+          }
+          label="Ratings Low to High"
         />
-        <RadioText>Ratings Low to High</RadioText>
-      </RadioButtonContainer>
-
-      {/* Apply sort button */}
+      </RadioGroup>
       <ApplyButtonContainer>
         <ApplyButton
           onClick={() => {
-            applySortOrder(shouldSortAscending)
+            applySortOrder(localSortOrder)
           }}
         >
           Apply

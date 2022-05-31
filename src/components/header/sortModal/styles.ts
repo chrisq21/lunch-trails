@@ -1,3 +1,4 @@
+import { css } from "@emotion/react"
 import styled from "styled-components"
 import { green } from "../../../styles/colors"
 import {
@@ -5,6 +6,7 @@ import {
   boldTextStyles,
   lightTextStyles,
 } from "../../../styles/shared"
+import FormControlLabel from "@mui/material/FormControlLabel"
 
 export const SortModalContainer = styled.div`
   ${inputStyles};
@@ -14,6 +16,7 @@ export const SortModalContainer = styled.div`
   top: 120%;
   z-index: 3;
   box-shadow: 0px 2px 4px rgba(0, 2, 4, 0.2);
+  right: 0px;
 `
 export const RadioButtonContainer = styled.div`
   display: flex;
@@ -28,9 +31,19 @@ export const RadioImg = styled.img`
   margin-right: 0.5rem;
 `
 
-export const RadioText = styled.span`
+export const RadioLabel = styled(FormControlLabel)`
   ${lightTextStyles};
-  font-size: 0.8rem;
+
+  // icon image
+  img {
+    height: 20px;
+    width: 20px;
+  }
+
+  // label text
+  span {
+    font-size: 0.8rem;
+  }
 `
 
 export const ApplyButtonContainer = styled.div`
@@ -44,4 +57,8 @@ export const ApplyButton = styled.span`
   color: ${green};
   font-size: 0.8rem;
   cursor: pointer;
+`
+
+export const labelStyles = css`
+  color: green;
 `

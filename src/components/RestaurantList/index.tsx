@@ -4,14 +4,15 @@ import { ListContainer } from "./style"
 import { v4 as uuidv4 } from "uuid"
 import RestaurantItem from "../restaurantItem"
 import getSortedRestaurants from "./utils/getSortedRestaurants"
+import { SortOptions } from "../../consts/sortOptions"
 
 interface Props {
   restaurants: Restaurant[]
-  shouldSortAscending: boolean
+  sortOrder: SortOptions
 }
 
-const RestaurantList = ({ restaurants, shouldSortAscending }: Props) => {
-  const sortedRestaurants = getSortedRestaurants(restaurants, shouldSortAscending)
+const RestaurantList = ({ restaurants, sortOrder }: Props) => {
+  const sortedRestaurants = getSortedRestaurants(restaurants, sortOrder)
   return (
     <ListContainer>
       {sortedRestaurants.map(restaurant => (
