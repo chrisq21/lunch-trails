@@ -1,10 +1,21 @@
-import * as React from "react"
-import { HeaderContainer } from "./styles"
+import { HeaderContainer, LogoImg, InputsContainer, SortButton, SearchBar } from "./styles"
+import React, { useEffect, useState, Dispatch, SetStateAction } from "react"
+import logoSrc from '../../assets/images/logo.png'
+interface Props {
+  searchQuery: string;
+  setSearchQuery: Dispatch<SetStateAction<String[]>>
+}
 
-const Header = () => (
+const Header = ({
+  searchQuery,
+  setSearchQuery,
+}: Props) => (
   <HeaderContainer>
-    <div />
-    <div />
+    <LogoImg src={logoSrc} />
+    <InputsContainer>
+      <SortButton>Sort</SortButton>
+      <SearchBar type={"text"} placeholder="Search for a restaurant" onChange={() => {}} />
+    </InputsContainer>
   </HeaderContainer>
 )
 
