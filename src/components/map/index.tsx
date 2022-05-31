@@ -15,9 +15,17 @@ let markers = []
 interface Props {
   restaurants: Restaurant[]
   setRestaurants: Dispatch<SetStateAction<Restaurant[]>>
+  setActiveRestaurantId: Dispatch<SetStateAction<string>>
   searchQuery: string
+  activeRestaurantId: string | null
 }
-const Map = ({ restaurants, setRestaurants, searchQuery }: Props) => {
+const Map = ({
+  restaurants,
+  setRestaurants,
+  setActiveRestaurantId,
+  searchQuery,
+  activeRestaurantId,
+}: Props) => {
   const [isLoaded, setIsLoaded] = useState<Boolean>(false)
 
   // Create Map Instance.
@@ -82,6 +90,7 @@ const Map = ({ restaurants, setRestaurants, searchQuery }: Props) => {
     }
   }, [isLoaded, searchQuery])
 
+  // Add markers to map from restaurants array.
   useEffect(() => {
     const createMarkers = () => {
       markers.forEach(marker => {
@@ -100,12 +109,38 @@ const Map = ({ restaurants, setRestaurants, searchQuery }: Props) => {
           clicked: false,
         })
 
+        google.maps.event.addListener(marker, "click", () => {
+          marker.clicked = true
+          setActiveRestaurantId(restaurant.place_id)
+        })
+
         markers.push(marker)
       })
     }
-
-    createMarkers()
+    if (isLoaded && restaurants.length) {
+      createMarkers()
+    }
   }, [isLoaded, restaurants])
+
+  // Update marker icon based off of activeRestaurantId state.
+  React.useEffect(() => {
+    const setMarkerIcons = activeRestaurantId => {
+      markers.forEach(marker => {
+        if (activeRestaurantId === marker.placeId) {
+          marker.setIcon(activeIcon)
+        } else {
+          if (marker.clicked) {
+            marker.setIcon(clickedIcon)
+          } else {
+            marker.setIcon(defaultIcon)
+          }
+        }
+      })
+    }
+    if (isLoaded) {
+      setMarkerIcons(activeRestaurantId)
+    }
+  }, [isLoaded, activeRestaurantId])
 
   return (
     <>

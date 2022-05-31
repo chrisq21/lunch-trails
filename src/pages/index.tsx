@@ -14,6 +14,7 @@ const IndexPage = () => {
     SortOptions.Descending
   )
   const [shouldShowList, setShouldShowList] = useState<boolean>(true)
+  const [activeRestaurantId, setActiveRestaurantId] = useState<string>(null)
 
   return (
     <Layout>
@@ -23,11 +24,17 @@ const IndexPage = () => {
           setSortOrder={setSortOrder}
           sortOrder={sortOrder}
         />
-        <RestaurantList restaurants={restaurants} sortOrder={sortOrder} />
+        <RestaurantList
+          restaurants={restaurants}
+          sortOrder={sortOrder}
+          activeRestaurantId={activeRestaurantId}
+        />
         <Map
           restaurants={restaurants}
           setRestaurants={setRestaurants}
+          setActiveRestaurantId={setActiveRestaurantId}
           searchQuery={searchQuery}
+          activeRestaurantId={activeRestaurantId}
         />
         <ToggleButtonContainer>
           <ToggleButton
