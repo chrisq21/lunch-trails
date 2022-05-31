@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react"
-import { Restaurant } from "../../shared-types"
+import { Restaurant } from "../../types/shared-types"
 import { MapOuterContainer, MapContainer } from "./styles"
 import { Loader } from "@googlemaps/js-api-loader"
 import { SFCoordinates } from "../../consts/map"

@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-import Header from "../components/Header"
-import Layout from "../components/Layout"
-import RestaurantList from "../components/RestaurantList"
-import Map from "../components/Map"
+import Header from "../components/header"
+import Layout from "../components/layout"
+import RestaurantList from "../components/restaurantList"
+import Map from "../components/map"
 import { Restaurant } from "../types/shared-types"
 import { GridContainer } from "./styles"
 

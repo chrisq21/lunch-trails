@@ -2,7 +2,7 @@ import * as React from "react"
 import { Restaurant } from "../../types/shared-types"
 import { ListContainer } from "./style"
 import { v4 as uuidv4 } from "uuid"
-import RestaurantItem from "../RestaurantItem"
+import RestaurantItem from "../restaurantItem"
 
 const RestaurantList = ({ restaurants }: { restaurants: Restaurant[] }) => {
   return (
