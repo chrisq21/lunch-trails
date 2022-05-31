@@ -27,12 +27,12 @@ export const DescriptionContainer = styled.div`
 
 export const Title = styled.span`
   ${boldTextStyles}
-  font-size: 1.2rem;
+  font-size: 1rem;
 `
 
 export const Text = styled.span`
   ${lightTextStyles}
-  font-size: 1rem;
+  font-size: 0.8rem;
 `
 
 export const StarsContainer = styled.div`

@@ -4,8 +4,10 @@ import Layout from "../components/layout"
 import RestaurantList from "../components/restaurantList"
 import Map from "../components/map"
 import { Restaurant } from "../types/shared-types"
-import { GridContainer } from "./styles"
+import { GridContainer, ToggleButton, ToggleButtonContainer } from "./styles"
 import { SortOptions } from "../consts/sortOptions"
+import listIconSrc from "../assets/images/list-icon.png"
+import mapIconSrc from "../assets/images/list-icon.png"
 
 const IndexPage = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([])
@@ -13,10 +15,11 @@ const IndexPage = () => {
   const [sortOrder, setSortOrder] = useState<SortOptions>(
     SortOptions.Descending
   )
+  const [shouldShowList, setShouldShowList] = useState<boolean>(true)
 
   return (
     <Layout>
-      <GridContainer>
+      <GridContainer shouldShowList={shouldShowList}>
         <Header
           setSearchQuery={setSearchQuery}
           setSortOrder={setSortOrder}
@@ -28,6 +31,15 @@ const IndexPage = () => {
           setRestaurants={setRestaurants}
           searchQuery={searchQuery}
         />
+        <ToggleButtonContainer>
+          <ToggleButton shouldShowMapImg={shouldShowList} onClick={() => setShouldShowList(!shouldShowList)}>
+            {/* <img
+              src={shouldShowList ? listIconSrc : mapIconSrc}
+              alt={shouldShowList ? "Map" : "List"}
+            /> */}
+            {shouldShowList ? "Map" : "List"}
+          </ToggleButton>
+        </ToggleButtonContainer>
       </GridContainer>
     </Layout>
   )
