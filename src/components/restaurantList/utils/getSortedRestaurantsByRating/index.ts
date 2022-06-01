@@ -1,6 +1,6 @@
 import { SortOptions } from "../../../../consts/sortOptions"
 
-const getSortedRestaurants = (restaurants, sortOrder) => {
+const getSortedRestaurantsByRating = (restaurants, sortOrder) => {
   const restaurantsCopy = [...restaurants]
   return restaurantsCopy.sort((restaurantA, restaurantB) => {
     if (sortOrder === SortOptions.Ascending) {
@@ -10,4 +10,4 @@ const getSortedRestaurants = (restaurants, sortOrder) => {
   })
 }
 
-export default getSortedRestaurants
+export default getSortedRestaurantsByRating

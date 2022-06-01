@@ -3,7 +3,7 @@ import { Restaurant } from "../../types/shared-types"
 import { ListContainer } from "./style"
 import { v4 as uuidv4 } from "uuid"
 import RestaurantItem from "../restaurantItem"
-import getSortedRestaurants from "./utils/getSortedRestaurants"
+import getSortedRestaurantsByRating from "./utils/getSortedRestaurantsByRating"
 import { SortOptions } from "../../consts/sortOptions"
 import { getFavoritesFromLocalStorage } from "../../utils/favoriteRestaurants"
 
@@ -23,7 +23,7 @@ const RestaurantList = ({
   const [favoriteRestaurantIds, setFavoriteRestaurantIds] = useState<string[]>(
     []
   )
-  const sortedRestaurants = getSortedRestaurants(restaurants, sortOrder)
+  const sortedRestaurants = getSortedRestaurantsByRating(restaurants, sortOrder)
 
   // Set favoriteRestaurantIds to local storage value on initial render.
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { SortOptions } from "../../../../consts/sortOptions"
-import getSortedRestaurants from "./index"
+import getSortedRestaurantsByRating from "./index"
 
 const restaurantLowRating = {
   name: "A",
@@ -22,9 +22,9 @@ const mockRestaurants = [
   restaurantHighRating,
 ]
 
-describe("getSortedRestaurants", () => {
+describe("getSortedRestaurantsByRating", () => {
   it("sorts restaurants in ascending order", () => {
-    const sortedRestaurants = getSortedRestaurants(
+    const sortedRestaurants = getSortedRestaurantsByRating(
       mockRestaurants,
       SortOptions.Ascending
     )
@@ -37,7 +37,7 @@ describe("getSortedRestaurants", () => {
   })
 
   it("sorts restaurants in descending order", () => {
-    const sortedRestaurants = getSortedRestaurants(
+    const sortedRestaurants = getSortedRestaurantsByRating(
       mockRestaurants,
       SortOptions.Descending
     )
