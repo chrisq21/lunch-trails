@@ -3,11 +3,11 @@ import { Restaurant } from "../../types/shared-types"
 import { MapOuterContainer, MapContainer } from "./styles"
 import { Loader } from "@googlemaps/js-api-loader"
 import { SFCoordinates } from "../../consts/map"
+import createPopupClass from "./createPopupClass"
+import RestaurantItem from "../restaurantItem"
 import defaultIcon from "../../assets/images/marker-default.png"
 import activeIcon from "../../assets/images/marker-active.png"
 import clickedIcon from "../../assets/images/marker-clicked.png"
-import createPopupClass from "./createPopupClass"
-import RestaurantItem from "../restaurantItem"
 
 let map
 let service
@@ -33,7 +33,9 @@ const Map = ({
   const [isLoaded, setIsLoaded] = useState<Boolean>(false)
   const [selectedRestaurantId, setSelectedRestaurantId] = useState<string>(null)
 
-  // Create Map Instance.
+  /* 
+    Create Map Instance. 
+  */
   useEffect(() => {
     let mapClickListener
 
@@ -90,7 +92,9 @@ const Map = ({
     }
   }, [])
 
-  // Request restaurants & update restaurants state.
+  /* 
+    Request restaurants & update restaurants state.
+  */
   useEffect(() => {
     if (isLoaded) {
       const getRestaurants = (keyword: string) => {
@@ -148,7 +152,9 @@ const Map = ({
     }
   }, [isLoaded, searchQuery])
 
-  // Add markers to map from restaurants array.
+  /*
+    Add markers to map from restaurants array.
+  */
   useEffect(() => {
     const createMarkers = () => {
       markers.forEach(marker => {
@@ -183,7 +189,9 @@ const Map = ({
     }
   }, [isLoaded, restaurants])
 
-  // Update marker icon based off of activeRestaurantId state.
+  /*
+    Update marker icon based off of activeRestaurantId state.
+  */
   React.useEffect(() => {
     const setMarkerIcons = activeRestaurantId => {
       markers.forEach(marker => {
