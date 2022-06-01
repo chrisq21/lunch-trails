@@ -1,11 +1,4 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react"
+import React, { Dispatch, SetStateAction, useEffect } from "react"
 import { Restaurant } from "../../types/shared-types"
 
 import {
@@ -16,6 +9,7 @@ import {
   Title,
   Text,
   HeartImg,
+  RestaurantImage,
 } from "./styles"
 
 import PriceLevel from "./priceLevel"
@@ -27,6 +21,8 @@ import {
 
 import heartActiveSrc from "../../assets/images/heart-active.png"
 import heartSrc from "../../assets/images/heart.png"
+
+let service
 
 interface Props {
   restaurant: Restaurant
@@ -47,7 +43,18 @@ const RestaurantItem = ({
   setFavoriteRestaurantIds,
   setActiveRestaurantId,
 }: Props) => {
-  const { name, rating, user_ratings_total, price_level, place_id } = restaurant
+  const { name, rating, user_ratings_total, price_level, place_id, photos } =
+    restaurant
+
+  // Use the first restaurant photo as main photo (if it exists)
+  let restaurantImageSrc
+  if (photos?.length) {
+    restaurantImageSrc = photos[0].getUrl()
+  }
+
+  const handleContainerClicked = () => {
+    console.log(restaurant)
+  }
 
   const handleMouseEnter = () => {
     if (!isMarkerSelected) {
@@ -84,10 +91,16 @@ const RestaurantItem = ({
     <ItemContainer
       isActive={isActive}
       isPopup={isPopup}
+      onClick={handleContainerClicked}
       {...containerListeners}
     >
       <InnerContainer>
-        <div>Image</div>
+        <div>
+          <RestaurantImage
+            src={restaurantImageSrc}
+            alt={`restaurant ${name}`}
+          />
+        </div>
         <DescriptionContainer>
           <Title>{name}</Title>
           <StarsContainer>

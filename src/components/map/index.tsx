@@ -40,11 +40,6 @@ const Map = ({
   useEffect(() => {
     let mapClickListener
 
-    const openMarkerInfo = (place, marker) => {
-      popup.setMap(map)
-      popup.position = marker.position
-    }
-
     const initMap = async () => {
       const loader = new Loader({
         apiKey: process.env.PLACES_API_KEY,
@@ -95,7 +90,7 @@ const Map = ({
     }
   }, [])
 
-  // Request restaurants from PlacesService & update restaurants state.
+  // Request restaurants & update restaurants state.
   useEffect(() => {
     if (isLoaded) {
       const getRestaurants = (keyword: string) => {
@@ -107,10 +102,41 @@ const Map = ({
           keyword,
         }
 
+        let restaurantsWithDetails = []
         try {
-          service.nearbySearch(request, function (results, status) {
+          // Fetch restaurants using Nearby Search api
+          let detailsRequestCount = 0
+          service.nearbySearch(request, (restaurants, status) => {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
-              setRestaurants(results)
+              restaurants.forEach((restaurant, index) => {
+                const detailsRequest = {
+                  placeId: restaurant.place_id,
+                  fields: ["website"],
+                }
+
+                // Fetch restaurant details in order to access website url.
+                service.getDetails(
+                  detailsRequest,
+                  (restuarantWithDetails, status) => {
+                    detailsRequestCount++
+                    if (
+                      status == google.maps.places.PlacesServiceStatus.OK &&
+                      restuarantWithDetails?.website
+                    ) {
+                      restaurantsWithDetails.push({
+                        ...restaurant,
+                        website: restuarantWithDetails?.website,
+                      })
+                    }
+
+                    // Since the Places Api doesn't return a promise, we need an alternative way of knowing when all requests are complete.
+                    // Once the total number of requests equals the restaurant array length, the details requests are done. Update the restaurants state.
+                    if (detailsRequestCount === restaurants.length - 1) {
+                      setRestaurants(restaurantsWithDetails)
+                    }
+                  }
+                )
+              })
             }
           })
         } catch (error) {
@@ -178,21 +204,16 @@ const Map = ({
   }, [isLoaded, activeRestaurantId])
 
   const getPopupItem = () => {
-    const restaurant = restaurants.find(({ place_id }) => activeRestaurantId === place_id)
-
-    return (
-      restaurant && (
-        <RestaurantItem
-          isPopup
-          restaurant={restaurant}
-        />
-      )
+    const restaurant = restaurants.find(
+      ({ place_id }) => activeRestaurantId === place_id
     )
+
+    return restaurant && <RestaurantItem isPopup restaurant={restaurant} />
   }
 
   return (
     <>
-    <div id="content">{isMarkerSelected && getPopupItem()}</div>
+      <div id="content">{isMarkerSelected && getPopupItem()}</div>
       <MapOuterContainer>
         <MapContainer id="map">Map</MapContainer>
       </MapOuterContainer>

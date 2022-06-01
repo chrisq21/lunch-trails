@@ -10,7 +10,7 @@ export const ItemContainer = styled.div<{
   display: flex;
   border-radius: 8px;
   background: white;
-  margin-bottom: ${({ isPopup }) => (isPopup ? 0 : '0.75rem')};
+  margin-bottom: ${({ isPopup }) => (isPopup ? 0 : "0.75rem")};
   padding: 1rem;
   justify-content: space-between;
   border: 1px solid ${borderGray};
@@ -33,6 +33,12 @@ export const ItemContainer = styled.div<{
   `}
 `
 
+export const RestaurantImage = styled.img`
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+`
+
 export const InnerContainer = styled.div`
   display: flex;
   flex-grow: 1;
@@ -42,7 +48,7 @@ export const DescriptionContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-left: 2rem;
+  margin-left: 1.25rem;
 `
 
 export const Title = styled.span`
@@ -56,6 +62,7 @@ export const Text = styled.span`
 `
 
 export const StarsContainer = styled.div`
+  display: flex;
   margin: 5px 0;
 `
 

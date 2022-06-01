@@ -15,7 +15,7 @@ const IndexPage = () => {
   )
   const [shouldShowList, setShouldShowList] = useState<boolean>(true)
   const [activeRestaurantId, setActiveRestaurantId] = useState<string>(null)
-  const [isMarkerSelected, setIsMarkerSelected] = React.useState(false)
+  const [isMarkerSelected, setIsMarkerSelected] = useState(false)
 
   return (
     <Layout>
