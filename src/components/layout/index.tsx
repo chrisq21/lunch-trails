@@ -1,10 +1,10 @@
 import * as React from "react"
-import { GlobalStyles } from "./style"
-
+import { globalStyles } from "./style"
+import { Global } from "@emotion/react"
 const Layout = ({ children }: { children: JSX.Element }) => {
   return (
     <div id="root">
-      <GlobalStyles></GlobalStyles>
+      <Global styles={globalStyles} />
       {children}
     </div>
   )

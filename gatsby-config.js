@@ -8,7 +8,7 @@ module.exports = {
     description: `AllTrails coding assessment`,
   },
   plugins: [
-    "gatsby-plugin-styled-components",
+    "gatsby-plugin-emotion",
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
     {
@@ -18,7 +18,6 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    'gatsby-plugin-material-ui'
   ],
 }

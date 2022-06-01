@@ -1,4 +1,4 @@
-import { css } from "styled-components"
+import { css } from "@emotion/react"
 import { borderGray, gray, lightGray } from "./colors"
 
 export const lightTextStyles = css`

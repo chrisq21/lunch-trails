@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { borderGray, green } from "../../styles/colors"
 import { boldTextStyles, lightTextStyles } from "../../styles/shared"
 

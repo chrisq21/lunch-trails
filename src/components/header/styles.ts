@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import searchIconSrc from "../../assets/images/search.png"
 import { mobileBreakpoint } from "../../consts/breakpoints"
 import { green } from "../../styles/colors"

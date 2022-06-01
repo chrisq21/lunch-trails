@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useState } from "react"
 import Header from "../components/header"
 import Layout from "../components/layout"
 import RestaurantList from "../components/restaurantList"
 import Map from "../components/map"
 import { Restaurant } from "../types/shared-types"
-import { GridContainer, ToggleButton, ToggleButtonContainer } from "./styles"
+import { GridContainer, ToggleButton, ToggleButtonContainer } from "../styles/homepageStyles"
 import { SortOptions } from "../consts/sortOptions"
 
 const IndexPage = () => {

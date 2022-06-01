@@ -1,7 +1,7 @@
-import { createGlobalStyle } from "styled-components"
+import { css } from "@emotion/react"
 import "../../styles/typography.css"
 
-export const GlobalStyles = createGlobalStyle`
+export const globalStyles = css`
   * {
     font-family: 'Proxima Nova Regular';
   }

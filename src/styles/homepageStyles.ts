@@ -1,7 +1,7 @@
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { mobileBreakpoint, mediumDesktop } from "../consts/breakpoints"
-import { green } from "../styles/colors"
-import { inputStyles } from "../styles/shared"
+import { green } from "./colors"
+import { inputStyles } from "./shared"
 
 import listIconSrc from "../assets/images/list-icon.png"
 import mapIconSrc from "../assets/images/map-icon.png"

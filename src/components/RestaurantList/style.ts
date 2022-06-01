@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { backgroundGray } from "../../styles/colors"
 
 export const ListContainer = styled.div`
