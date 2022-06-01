@@ -1,4 +1,13 @@
-## Development Guide
+## Overview
+Welcome! Below is some general information about the repo and a guide for building the project locally. If you have any questions feel free to email me at chrisqueen10@gmail.com.
+* A live version of the site is currently being hosted by Netlify at the following url:
+    * https://main--benevolent-pika-05fce4.netlify.app/
+* This project uses the [Gatsby](https://www.gatsbyjs.com/) framework and started out using the  [gatsby-starter-default](https://www.gatsbyjs.com/starters/gatsbyjs/gatsby-starter-default) boilerplate.
+* The homepage is setup in the `src/pages/index.tsx` file.
+* State management:
+    * The homepage contains the majority of the application state, which is then passed to child components as props. I initially didn't think there would be a lot of state to manage, but in hindsight I would have integrated a state management library like redux if I were to build this again.
+
+## Build Guide
 
 1.  **Install node modules**
 
