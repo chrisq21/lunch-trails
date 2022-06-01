@@ -6,6 +6,7 @@ Welcome! Below is some general information about the repo and a guide for buildi
 * The homepage is setup in the `src/pages/index.tsx` file.
 * State management:
     * The homepage contains the majority of the application state, which is then passed to child components as props. I initially didn't think there would be a lot of state to manage, but in hindsight I would have integrated a state management library like redux if I were to build this again.
+* Thanks for the consideration!
 
 ## Build Guide
 
