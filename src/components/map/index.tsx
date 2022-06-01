@@ -19,22 +19,19 @@ interface Props {
   restaurants: Restaurant[]
   searchQuery: string
   activeRestaurantId: string | null
-  isMarkerSelected: boolean
   setRestaurants: Dispatch<SetStateAction<Restaurant[]>>
   setActiveRestaurantId: Dispatch<SetStateAction<string>>
-  setIsMarkerSelected: Dispatch<SetStateAction<boolean>>
 }
 
 const Map = ({
   restaurants,
   searchQuery,
   activeRestaurantId,
-  isMarkerSelected,
   setRestaurants,
   setActiveRestaurantId,
-  setIsMarkerSelected,
 }: Props) => {
   const [isLoaded, setIsLoaded] = useState<Boolean>(false)
+  const [selectedRestaurantId, setSelectedRestaurantId] = useState<string>(null)
 
   // Create Map Instance.
   useEffect(() => {
@@ -70,7 +67,7 @@ const Map = ({
 
         // De-activate marker selection when map is clicked.
         mapClickListener = map.addListener("click", () => {
-          setIsMarkerSelected(false)
+          setSelectedRestaurantId(null)
           setActiveRestaurantId(null)
           popup.setMap(null)
         })
@@ -171,8 +168,8 @@ const Map = ({
           marker.clicked = true
           popup.setMap(map)
           popup.position = marker.position
-          setIsMarkerSelected(true)
           setActiveRestaurantId(restaurant.place_id)
+          setSelectedRestaurantId(restaurant.place_id)
         })
 
         markers.push(marker)
@@ -198,8 +195,14 @@ const Map = ({
         }
       })
     }
+
     if (isLoaded) {
       setMarkerIcons(activeRestaurantId)
+
+      // Hide the selected restaruant popup if a new restaurant is active
+      if (selectedRestaurantId !== activeRestaurantId) {
+        setSelectedRestaurantId(null)
+      }
     }
   }, [isLoaded, activeRestaurantId])
 
@@ -213,7 +216,7 @@ const Map = ({
 
   return (
     <>
-      <div id="content">{isMarkerSelected && getPopupItem()}</div>
+      <div id="content">{selectedRestaurantId && getPopupItem()}</div>
       <MapOuterContainer>
         <MapContainer id="map">Map</MapContainer>
       </MapOuterContainer>

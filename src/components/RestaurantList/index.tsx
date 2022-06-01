@@ -19,7 +19,6 @@ const RestaurantList = ({
   restaurants,
   sortOrder,
   activeRestaurantId,
-  isMarkerSelected,
   setActiveRestaurantId,
 }: Props) => {
   const [favoriteRestaurantIds, setFavoriteRestaurantIds] = useState<string[]>(
@@ -45,7 +44,6 @@ const RestaurantList = ({
           isFavoriteRestaurant={favoriteRestaurantIds.includes(
             restaurant.place_id
           )}
-          isMarkerSelected={isMarkerSelected}
           setActiveRestaurantId={setActiveRestaurantId}
           setFavoriteRestaurantIds={setFavoriteRestaurantIds}
         />

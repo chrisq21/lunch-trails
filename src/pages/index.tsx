@@ -15,7 +15,6 @@ const IndexPage = () => {
   )
   const [shouldShowList, setShouldShowList] = useState<boolean>(true)
   const [activeRestaurantId, setActiveRestaurantId] = useState<string>(null)
-  const [isMarkerSelected, setIsMarkerSelected] = useState(false)
 
   return (
     <Layout>
@@ -29,17 +28,14 @@ const IndexPage = () => {
           restaurants={restaurants}
           sortOrder={sortOrder}
           activeRestaurantId={activeRestaurantId}
-          isMarkerSelected={isMarkerSelected}
           setActiveRestaurantId={setActiveRestaurantId}
         />
         <Map
           restaurants={restaurants}
           activeRestaurantId={activeRestaurantId}
           searchQuery={searchQuery}
-          isMarkerSelected={isMarkerSelected}
           setRestaurants={setRestaurants}
           setActiveRestaurantId={setActiveRestaurantId}
-          setIsMarkerSelected={setIsMarkerSelected}
         />
         <ToggleButtonContainer>
           <ToggleButton
