@@ -61,6 +61,6 @@ export const removeFavoriteRestaurantIdFromLocalStorage = restaurantId => {
     existingPlaceId => existingPlaceId !== restaurantId
   )
   setFavoritesToLocalStorage(favoriteRestaurantIds)
-  
+
   return favoriteRestaurantIds
 }

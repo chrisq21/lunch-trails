@@ -11,8 +11,9 @@ import {
 import React, { Dispatch, SetStateAction, useState } from "react"
 import SortModal from "./sortModal"
 import debounce from "lodash.debounce"
-import logoSrc from "../../assets/images/logo.png"
 import { SortOptions } from "../../consts/sortOptions"
+import logoSrc from "../../assets/images/logo.png"
+
 
 interface Props {
   setSearchQuery: Dispatch<SetStateAction<string>>

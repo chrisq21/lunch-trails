@@ -1,1 +1,1 @@
-export const favoritesLocalStorageKey = 'favoriteRestaurantIds'
+export const favoritesLocalStorageKey = "favoriteRestaurantIds"

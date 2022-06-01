@@ -1,4 +1,4 @@
 export enum SortOptions {
-  Ascending = 'ascending',
-  Descending = 'descending'
+  Ascending = "ascending",
+  Descending = "descending",
 }

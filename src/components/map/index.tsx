@@ -63,7 +63,6 @@ const Map = ({
         // Create api service instance.
         service = new google.maps.places.PlacesService(map)
 
-
         // Create custom pop (using Restaurant Item component as content).
         const Popup = createPopupClass(google)
         popup = new Popup(defaultCenter, document.getElementById("content"))
