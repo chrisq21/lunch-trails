@@ -229,7 +229,7 @@ const Map = ({
     <>
       <div id="content">{selectedRestaurantId && getPopupItem()}</div>
       <MapOuterContainer>
-        <MapContainer id="map">Map</MapContainer>
+        <MapContainer id="map"></MapContainer>
       </MapOuterContainer>
     </>
   )
