@@ -46,6 +46,9 @@ export const ToggleButtonContainer = styled.div`
     bottom: 50px;
     width: 100%;
     z-index: 2;
+
+    // fix for Safari z-index issue
+    -webkit-transform:translate3d(0,0,0);
   }
 `
 

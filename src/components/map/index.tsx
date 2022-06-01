@@ -41,7 +41,7 @@ const Map = ({
 
     const initMap = async () => {
       const loader = new Loader({
-        apiKey: process.env.GATSBY_PLACES_API_KEY,
+        apiKey: process.env.GATSBY_PLACES_API_KEY || process.env.PLACES_API_KEY,
         version: "weekly",
         libraries: ["places"],
       })
