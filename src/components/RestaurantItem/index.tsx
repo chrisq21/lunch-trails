@@ -17,7 +17,7 @@ import StarRating from "./starRating"
 import {
   addFavoriteRestaurantIdToLocalStorage,
   removeFavoriteRestaurantIdFromLocalStorage,
-} from "../utils/favoriteRestaurants"
+} from "../../utils/favoriteRestaurants"
 
 import heartActiveSrc from "../../assets/images/heart-active.png"
 import heartSrc from "../../assets/images/heart.png"

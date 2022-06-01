@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid"
 import RestaurantItem from "../restaurantItem"
 import getSortedRestaurants from "./utils/getSortedRestaurants"
 import { SortOptions } from "../../consts/sortOptions"
-import { getFavoritesFromLocalStorage } from "../utils/favoriteRestaurants"
+import { getFavoritesFromLocalStorage } from "../../utils/favoriteRestaurants"
 
 interface Props {
   restaurants: Restaurant[]

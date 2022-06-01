@@ -1,4 +1,4 @@
-import { favoritesLocalStorageKey } from "../../consts/favorites"
+import { favoritesLocalStorageKey } from "../consts/favorites"
 
 export const getFavoritesFromLocalStorage = () => {
   let favoriteRestaurantIds = []

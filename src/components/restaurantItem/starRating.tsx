@@ -7,7 +7,7 @@ import { StarImg } from "./styles"
 const StarRating = ({ numActiveStars }: { numActiveStars: number }) => {
   let stars = []
   for (let i = 0; i < 5; i++) {
-    const isActiveStar = i < Math.floor(numActiveStars)
+    const isActiveStar = i < Math.round(numActiveStars)
     const starSrc = isActiveStar ? starActiveSrc : starDefaultSrc
     stars.push(<StarImg key={uuidv4()} src={starSrc} alt="star" />)
   }
