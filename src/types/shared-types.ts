@@ -9,6 +9,7 @@ export interface Restaurant {
   user_ratings_total: number
   price_level: number
   photos: Photo[]
+  website: string
   geometry: {
     location: {
       lat: number

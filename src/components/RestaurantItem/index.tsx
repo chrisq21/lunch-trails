@@ -22,7 +22,6 @@ import {
 import heartActiveSrc from "../../assets/images/heart-active.png"
 import heartSrc from "../../assets/images/heart.png"
 
-let service
 
 interface Props {
   restaurant: Restaurant
@@ -41,7 +40,7 @@ const RestaurantItem = ({
   setFavoriteRestaurantIds,
   setActiveRestaurantId,
 }: Props) => {
-  const { name, rating, user_ratings_total, price_level, place_id, photos } =
+  const { name, rating, user_ratings_total, price_level, place_id, photos, website } =
     restaurant
 
   // Use the first restaurant photo as main photo (if it exists)
@@ -51,7 +50,7 @@ const RestaurantItem = ({
   }
 
   const handleContainerClicked = () => {
-    console.log(restaurant)
+    window.open(website, '_blank')
   }
 
   const handleMouseEnter = () => {

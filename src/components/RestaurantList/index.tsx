@@ -11,7 +11,6 @@ interface Props {
   restaurants: Restaurant[]
   sortOrder: SortOptions
   activeRestaurantId: string | null
-  isMarkerSelected: boolean
   setActiveRestaurantId: Dispatch<SetStateAction<string>>
 }
 
