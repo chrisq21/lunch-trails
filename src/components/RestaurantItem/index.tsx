@@ -22,7 +22,6 @@ import {
 import heartActiveSrc from "../../assets/images/heart-active.png"
 import heartSrc from "../../assets/images/heart.png"
 
-
 interface Props {
   restaurant: Restaurant
   isPopup?: boolean
@@ -40,8 +39,15 @@ const RestaurantItem = ({
   setFavoriteRestaurantIds,
   setActiveRestaurantId,
 }: Props) => {
-  const { name, rating, user_ratings_total, price_level, place_id, photos, website } =
-    restaurant
+  const {
+    name,
+    rating,
+    user_ratings_total,
+    price_level,
+    place_id,
+    photos,
+    website,
+  } = restaurant
 
   // Use the first restaurant photo as main photo (if it exists)
   let restaurantImageSrc
@@ -49,16 +55,19 @@ const RestaurantItem = ({
     restaurantImageSrc = photos[0].getUrl()
   }
 
-  const handleContainerClicked = () => {
-    window.open(website, '_blank')
+  const handleContainerClicked = event => {
+    // Open the restaurant website if the favorite icon was not clicked.
+    if (!event.target.classList.contains("favorite")) {
+      window.open(website, "_blank")
+    }
   }
 
   const handleMouseEnter = () => {
-      setActiveRestaurantId(place_id)
+    setActiveRestaurantId(place_id)
   }
 
   const handleMouseLeave = () => {
-      setActiveRestaurantId(null)
+    setActiveRestaurantId(null)
   }
 
   const handleFavoriteClicked = (restaurantId: string, isFavorite: boolean) => {
@@ -109,6 +118,7 @@ const RestaurantItem = ({
       {!isPopup && (
         <div>
           <HeartImg
+            className="favorite"
             src={isFavoriteRestaurant ? heartActiveSrc : heartSrc}
             alt={isFavoriteRestaurant ? "favorited" : "not favorited"}
             onClick={() =>

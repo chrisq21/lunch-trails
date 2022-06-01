@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { borderGray, green } from "../../styles/colors"
 import { boldTextStyles, lightTextStyles } from "../../styles/shared"
 
-export const ItemContainer = styled.div<{
+export const ItemContainer = styled.a<{
   isActive: boolean
   isPopup: boolean
 }>`
