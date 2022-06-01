@@ -5,7 +5,7 @@ require("dotenv").config({
 module.exports = {
   siteMetadata: {
     title: `AllTrails at Lunch`,
-    description: `AllTrails coding assessment`,
+    description: ``,
   },
   plugins: [
     "gatsby-plugin-emotion",
