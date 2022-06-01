@@ -41,7 +41,7 @@ const Map = ({
 
     const initMap = async () => {
       const loader = new Loader({
-        apiKey: process.env.PLACES_API_KEY,
+        apiKey: process.env.GATSBY_PLACES_API_KEY,
         version: "weekly",
         libraries: ["places"],
       })
@@ -101,7 +101,7 @@ const Map = ({
         const request = {
           location: map.getCenter(),
           radius: 1500,
-          key: process.env.PLACES_API_KEY,
+          key: process.env.GATSBY_PLACES_API_KEY,
           type: "restaurant",
           keyword,
         }
