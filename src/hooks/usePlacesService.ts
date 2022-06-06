@@ -49,10 +49,9 @@ const useNearbySearchService = (map, service, searchQuery = "") => {
 
               try {
                 const placesWithDetails = await Promise.all(detailsPromises)
-                console.log(placesWithDetails)
                 setPlaces(placesWithDetails)
               } catch (error) {
-                console.log(error)
+                // Report error.
               }
             }
           })
