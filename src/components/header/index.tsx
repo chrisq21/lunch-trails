@@ -34,7 +34,7 @@ const Header = ({ setSearchQuery, setSortOrder, sortOrder }: Props) => {
   }
 
   const debouncedHandleSearchChange = React.useMemo(
-    () => debounce(handleSearchChange, 250),
+    () => debounce(handleSearchChange, 500),
     []
   )
 

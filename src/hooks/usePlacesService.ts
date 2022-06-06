@@ -32,16 +32,9 @@ const useNearbySearchService = (map, service, searchQuery = "") => {
                   fields: ["website"],
                 }
 
-                const detailsPromise = new Promise((resolve, reject) => {
-                  service.getDetails(detailsRequest, (placeDetails, status) => {
-                    if (
-                      status == google.maps.places.PlacesServiceStatus.OK &&
-                      placeDetails?.website
-                    ) {
-                      resolve({ ...place, ...placeDetails })
-                    } else {
-                      reject("No details found")
-                    }
+                const detailsPromise = new Promise((resolve) => {
+                  service.getDetails(detailsRequest, (placeDetails) => {
+                    resolve({ ...place, ...placeDetails })
                   })
                 })
                 detailsPromises.push(detailsPromise)
