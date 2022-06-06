@@ -2,110 +2,36 @@ import React, { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { Restaurant } from "../../types/shared-types"
 import { MapOuterContainer, MapContainer } from "./styles"
 import { Loader, LoaderOptions } from "@googlemaps/js-api-loader"
+import useGoogleMapsApi from "../../hooks/useGoogleMapsApi"
+import usePlacesService from "../../hooks/usePlacesService"
 import { SFCoordinates } from "../../consts/map"
 import createPopupClass from "./createPopupClass"
 import RestaurantItem from "../restaurantItem"
 import defaultIcon from "../../assets/images/marker-default.png"
 import activeIcon from "../../assets/images/marker-active.png"
 import clickedIcon from "../../assets/images/marker-clicked.png"
-import useGoogleMapsApi from "../../hooks/useGoogleMapsApi"
 
 let markers = []
 let popup
 
 interface Props {
+  google?: typeof google
+  map?: google.maps.Map
+  service?: google.maps.places.PlacesService
   restaurants: Restaurant[]
   searchQuery: string
   activeRestaurantId: string | null
-  setRestaurants: Dispatch<SetStateAction<Restaurant[]>>
   setActiveRestaurantId: Dispatch<SetStateAction<string>>
 }
 
 const Map = ({
+  google,
+  map,
   restaurants,
-  searchQuery,
   activeRestaurantId,
-  setRestaurants,
   setActiveRestaurantId,
 }: Props) => {
   const [selectedRestaurantId, setSelectedRestaurantId] = useState<string>(null)
-
-  const loaderOptions: LoaderOptions = {
-    apiKey: process.env.GATSBY_PLACES_API_KEY || process.env.PLACES_API_KEY,
-    libraries: ["places"],
-  }
-
-  const mapOptions: google.maps.MapOptions = {
-    center: { lat: SFCoordinates.lat, lng: SFCoordinates.lng },
-    zoom: 15,
-    disableDefaultUI: true,
-  }
-
-  const { google, map, service } = useGoogleMapsApi(
-    loaderOptions,
-    mapOptions,
-    "map"
-  )
-
-  /* 
-    Request restaurants & update restaurants state.
-  */
-  useEffect(() => {
-    if (map) {
-      const getRestaurants = (keyword: string) => {
-        const request = {
-          location: map.getCenter(),
-          radius: 1500,
-          key: process.env.GATSBY_PLACES_API_KEY,
-          type: "restaurant",
-          keyword,
-        }
-
-        let restaurantsWithDetails = []
-        try {
-          // Fetch restaurants using Nearby Search api
-          let detailsRequestCount = 0
-          service.nearbySearch(request, (restaurants, status) => {
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-              restaurants.forEach((restaurant, index) => {
-                const detailsRequest = {
-                  placeId: restaurant.place_id,
-                  fields: ["website"],
-                }
-
-                // Fetch restaurant details in order to access website url.
-                service.getDetails(
-                  detailsRequest,
-                  (restuarantWithDetails, status) => {
-                    detailsRequestCount++
-                    if (
-                      status == google.maps.places.PlacesServiceStatus.OK &&
-                      restuarantWithDetails?.website
-                    ) {
-                      restaurantsWithDetails.push({
-                        ...restaurant,
-                        website: restuarantWithDetails?.website,
-                      })
-                    }
-
-                    // Since the Places Api doesn't return a promise, we need an alternative way of knowing when all requests are complete.
-                    // Once the total number of requests equals the restaurant array length, the details requests are done. Update the restaurants state.
-                    if (detailsRequestCount === restaurants.length - 1) {
-                      setRestaurants(restaurantsWithDetails)
-                    }
-                  }
-                )
-              })
-            }
-          })
-        } catch (error) {
-          // Send error to monitoring service
-          console.error(error)
-        }
-      }
-      getRestaurants(searchQuery)
-    }
-  }, [map, searchQuery])
 
   /*
     Add markers to map from restaurants array.
