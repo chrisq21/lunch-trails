@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import defaultIcon from "../assets/images/marker-default.png"
 import activeIcon from "../assets/images/marker-active.png"
 import clickedIcon from "../assets/images/marker-clicked.png"
@@ -10,7 +10,7 @@ const useMarkers = (
   popup,
   activePlaceId,
   setActivePlaceId
-) => {
+): [string, Dispatch<SetStateAction<string>>] => {
   const [markers, setMarkers] = useState<google.maps.Marker[]>([])
   const [clickedPlaceId, setClickedPlaceId] = useState<string>()
 
