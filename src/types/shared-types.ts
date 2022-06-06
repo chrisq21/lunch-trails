@@ -1,5 +1,6 @@
 interface Photo {
   getUrl: () => string
+  photo_reference: string
 }
 
 export interface Restaurant {

@@ -6,15 +6,27 @@ const baseRequestOptions = {
   type: "restaurant",
 }
 
-const useNearbySearchService = (map, service, searchQuery = "") => {
-  const [places, setPlaces] = useState([])
+const placesArrayAreEqual = (placeArrayA, placeArrayB) => {
+  return placeArrayA.length === placeArrayB.length &&
+    placeArrayB.every(({ place_id }) =>
+      placeArrayA.some(staticPlace => staticPlace.place_id === place_id)
+    )
+}
+
+const useNearbySearchService = (
+  map,
+  service,
+  searchQuery,
+  staticContent = []
+) => {
+  const [places, setPlaces] = useState(staticContent)
 
   useEffect(() => {
     if (map) {
       const requestOptions = {
         ...baseRequestOptions,
         location: map.getCenter(),
-        keyword: searchQuery,
+        keyword: searchQuery || '',
       }
 
       const fetchPlaces = () => {
@@ -41,7 +53,17 @@ const useNearbySearchService = (map, service, searchQuery = "") => {
 
               try {
                 const placesWithDetails = await Promise.all(detailsPromises)
-                setPlaces(placesWithDetails)
+
+                // If new places array the same as static content array, don't update places state.
+                if (!placesArrayAreEqual(staticContent, placesWithDetails)) {
+                  setPlaces(placesWithDetails)
+                } else {
+                  if(searchQuery !== null) {
+                    setPlaces(placesWithDetails)
+                  }
+                }
+
+                console.log(placesArrayAreEqual)
               } catch (error) {
                 // Report error.
               }

@@ -52,7 +52,17 @@ const RestaurantItem = ({
   // Use the first restaurant photo as main photo (if it exists)
   let restaurantImageSrc
   if (photos?.length) {
-    restaurantImageSrc = photos[0].getUrl()
+    if (photos[0]) {
+      const photoData = photos[0]
+      if (photoData?.getUrl) {
+        restaurantImageSrc = photoData?.getUrl()
+      } else {
+        const { photo_reference } = photoData
+        const key =
+          process.env.GATSBY_PLACES_API_KEY || process.env.PLACES_API_KEY
+        restaurantImageSrc = `https://maps.googleapis.com/maps/api/place/photo?photo_reference=${photo_reference}&key=${key}&maxwidth=400`
+      }
+    }
   }
 
   const handleContainerClicked = event => {

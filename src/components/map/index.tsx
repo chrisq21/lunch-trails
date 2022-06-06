@@ -11,7 +11,6 @@ interface Props {
   map?: google.maps.Map
   service?: google.maps.places.PlacesService
   restaurants: Restaurant[]
-  searchQuery: string
   activeRestaurantId: string | null
   setActiveRestaurantId: Dispatch<SetStateAction<string>>
 }

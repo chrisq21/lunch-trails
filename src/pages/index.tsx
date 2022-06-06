@@ -14,8 +14,10 @@ import { LoaderOptions } from "@googlemaps/js-api-loader"
 import useGoogleMapsApi from "../hooks/useGoogleMapsApi"
 import usePlacesService from "../hooks/usePlacesService"
 import { SFCoordinates } from "../consts/map"
+import { graphql } from "gatsby"
 
-const IndexPage = () => {
+const IndexPage = ({ data }) => {
+  const staticContent = data.allPlace.nodes
   // Google Maps Api config
   const loaderOptions: LoaderOptions = {
     apiKey: process.env.GATSBY_PLACES_API_KEY || process.env.PLACES_API_KEY,
@@ -29,7 +31,7 @@ const IndexPage = () => {
 
   // App state
   const [activeRestaurantId, setActiveRestaurantId] = useState<string>(null)
-  const [searchQuery, setSearchQuery] = useState<string>("")
+  const [searchQuery, setSearchQuery] = useState<string>(null)
   const [shouldShowList, setShouldShowList] = useState<boolean>(true)
   const [sortOrder, setSortOrder] = useState<SortOptions>(
     SortOptions.Descending
@@ -39,7 +41,7 @@ const IndexPage = () => {
     mapOptions,
     "map"
   )
-  const restaurants = usePlacesService(map, service, searchQuery)
+  const restaurants = usePlacesService(map, service, searchQuery, staticContent)
 
   return (
     <Layout>
@@ -61,7 +63,6 @@ const IndexPage = () => {
           service={service}
           restaurants={restaurants}
           activeRestaurantId={activeRestaurantId}
-          searchQuery={searchQuery}
           setActiveRestaurantId={setActiveRestaurantId}
         />
         <ToggleButtonContainer>
@@ -78,3 +79,27 @@ const IndexPage = () => {
 }
 
 export default IndexPage
+
+export const query = graphql`
+  {
+    allPlace {
+      nodes {
+        name
+        place_id
+        rating
+        user_ratings_total
+        photos {
+          photo_reference
+        }
+        price_level
+        geometry {
+          location {
+            lat
+            lng
+          }
+        }
+        website
+      }
+    }
+  }
+`
