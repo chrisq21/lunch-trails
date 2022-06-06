@@ -17,7 +17,7 @@ import usePlacesService from "../hooks/usePlacesService"
 import { SFCoordinates } from "../consts/map"
 
 const IndexPage = () => {
-  // Google Maps Api variables
+  // Google Maps Api config
   const loaderOptions: LoaderOptions = {
     apiKey: process.env.GATSBY_PLACES_API_KEY || process.env.PLACES_API_KEY,
     libraries: ["places"],

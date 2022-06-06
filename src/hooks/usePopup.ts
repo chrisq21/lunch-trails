@@ -40,7 +40,7 @@ const usePopup = (google, map, contentElementId) => {
     }
   }, [popup, shouldShowPopup])
 
-  return { popup, shouldShowPopup }
+  return popup
 }
 
 export default usePopup

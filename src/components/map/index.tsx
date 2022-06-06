@@ -1,14 +1,10 @@
-import React, { useEffect, useState, Dispatch, SetStateAction } from "react"
+import React, { useEffect, Dispatch, SetStateAction } from "react"
 import { Restaurant } from "../../types/shared-types"
 import { MapOuterContainer, MapContainer } from "./styles"
 
 import RestaurantItem from "../restaurantItem"
-import defaultIcon from "../../assets/images/marker-default.png"
-import activeIcon from "../../assets/images/marker-active.png"
-import clickedIcon from "../../assets/images/marker-clicked.png"
 import usePopup from "../../hooks/usePopup"
-
-let markers = []
+import useMarkers from "../../hooks/useMarkers"
 
 interface Props {
   google?: typeof google
@@ -27,92 +23,35 @@ const Map = ({
   activeRestaurantId,
   setActiveRestaurantId,
 }: Props) => {
-  const [selectedRestaurantId, setSelectedRestaurantId] = useState<string>(null)
-  const { popup, shouldShowPopup } = usePopup(google, map, "content")
+  const popup = usePopup(google, map, "content")
+  const [ clickedPlaceId, setClickedPlaceId ] = useMarkers(
+    google,
+    map,
+    restaurants,
+    popup,
+    activeRestaurantId,
+    setActiveRestaurantId
+  )
 
   useEffect(() => {
-    if (!shouldShowPopup) {
-      setSelectedRestaurantId(null)
-      setActiveRestaurantId(null)
-    }
-  }, [shouldShowPopup])
-
-  /*
-    Add markers to map from restaurants array.
-  */
-  useEffect(() => {
-    const createMarkers = () => {
-      markers.forEach(marker => {
-        marker.setMap(null)
-      })
-      markers = []
-
-      restaurants.forEach(restaurant => {
-        if (!restaurant?.geometry?.location) return
-
-        const marker = new google.maps.Marker({
-          map,
-          position: restaurant.geometry.location,
-          icon: defaultIcon,
-          placeId: restaurant.place_id,
-          clicked: false,
-        })
-
-        google.maps.event.addListener(marker, "click", () => {
-          marker.clicked = true
-          popup.setMap(map)
-          popup.position = marker.position
-          setActiveRestaurantId(restaurant.place_id)
-          setSelectedRestaurantId(restaurant.place_id)
-        })
-
-        markers.push(marker)
-      })
-    }
-    if (map && restaurants.length) {
-      createMarkers()
-    }
-  }, [map, restaurants])
-
-  /*
-    Update marker icon based off of activeRestaurantId state.
-  */
-  React.useEffect(() => {
-    const setMarkerIcons = activeRestaurantId => {
-      markers.forEach(marker => {
-        if (activeRestaurantId === marker.placeId) {
-          marker.setIcon(activeIcon)
-        } else {
-          if (marker.clicked) {
-            marker.setIcon(clickedIcon)
-          } else {
-            marker.setIcon(defaultIcon)
-          }
-        }
-      })
-    }
-
     if (map) {
-      setMarkerIcons(activeRestaurantId)
-
-      // Hide the selected restaruant popup if a new restaurant is active
-      if (selectedRestaurantId !== activeRestaurantId) {
-        setSelectedRestaurantId(null)
-      }
+      map.addListener("click", () => {
+        setClickedPlaceId(null)
+        setActiveRestaurantId(null)
+      })
     }
-  }, [map, activeRestaurantId])
+  }, [map])
 
   const getPopupItem = () => {
     const restaurant = restaurants.find(
       ({ place_id }) => activeRestaurantId === place_id
     )
-
     return restaurant && <RestaurantItem isPopup restaurant={restaurant} />
   }
 
   return (
     <>
-      <div id="content">{selectedRestaurantId && getPopupItem()}</div>
+      <div id="content">{clickedPlaceId && getPopupItem()}</div>
       <MapOuterContainer>
         <MapContainer id="map"></MapContainer>
       </MapOuterContainer>
