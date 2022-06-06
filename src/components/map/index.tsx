@@ -1,17 +1,15 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { Restaurant } from "../../types/shared-types"
 import { MapOuterContainer, MapContainer } from "./styles"
-import { Loader } from "@googlemaps/js-api-loader"
+import { Loader, LoaderOptions } from "@googlemaps/js-api-loader"
 import { SFCoordinates } from "../../consts/map"
 import createPopupClass from "./createPopupClass"
 import RestaurantItem from "../restaurantItem"
 import defaultIcon from "../../assets/images/marker-default.png"
 import activeIcon from "../../assets/images/marker-active.png"
 import clickedIcon from "../../assets/images/marker-clicked.png"
+import useGoogleMapsApi from "../../hooks/useGoogleMapsApi"
 
-let map
-let service
-let google
 let markers = []
 let popup
 
@@ -30,73 +28,30 @@ const Map = ({
   setRestaurants,
   setActiveRestaurantId,
 }: Props) => {
-  const [isLoaded, setIsLoaded] = useState<Boolean>(false)
   const [selectedRestaurantId, setSelectedRestaurantId] = useState<string>(null)
 
-  /* 
-    Create Map Instance. 
-  */
-  useEffect(() => {
-    let mapClickListener
+  const loaderOptions: LoaderOptions = {
+    apiKey: process.env.GATSBY_PLACES_API_KEY || process.env.PLACES_API_KEY,
+    libraries: ["places"],
+  }
 
-    const initMap = async () => {
-      const loader = new Loader({
-        apiKey: process.env.GATSBY_PLACES_API_KEY || process.env.PLACES_API_KEY,
-        version: "weekly",
-        libraries: ["places"],
-      })
+  const mapOptions: google.maps.MapOptions = {
+    center: { lat: SFCoordinates.lat, lng: SFCoordinates.lng },
+    zoom: 15,
+    disableDefaultUI: true,
+  }
 
-      try {
-        google = await loader.load()
-
-        // Set initial map center to San Francisco coordinates
-        const defaultCenter = new google.maps.LatLng(
-          SFCoordinates.lat,
-          SFCoordinates.lng
-        )
-
-        // Create map instance.
-        map = new google.maps.Map(document.getElementById("map"), {
-          center: defaultCenter,
-          zoom: 15,
-          disableDefaultUI: true,
-        })
-
-        // Create api service instance.
-        service = new google.maps.places.PlacesService(map)
-
-        // Create custom pop (using Restaurant Item component as content).
-        const Popup = createPopupClass(google)
-        popup = new Popup(defaultCenter, document.getElementById("content"))
-        popup.setMap(null)
-
-        // De-activate marker selection when map is clicked.
-        mapClickListener = map.addListener("click", () => {
-          setSelectedRestaurantId(null)
-          setActiveRestaurantId(null)
-          popup.setMap(null)
-        })
-
-        setIsLoaded(true)
-      } catch (error) {
-        // Send error data to error reporter.
-        console.error(error)
-      }
-    }
-
-    initMap()
-
-    // Remove map click listener when un-mounting
-    return () => {
-      google.maps.event.removeListener(mapClickListener)
-    }
-  }, [])
+  const { google, map, service } = useGoogleMapsApi(
+    loaderOptions,
+    mapOptions,
+    "map"
+  )
 
   /* 
     Request restaurants & update restaurants state.
   */
   useEffect(() => {
-    if (isLoaded) {
+    if (map) {
       const getRestaurants = (keyword: string) => {
         const request = {
           location: map.getCenter(),
@@ -150,7 +105,7 @@ const Map = ({
       }
       getRestaurants(searchQuery)
     }
-  }, [isLoaded, searchQuery])
+  }, [map, searchQuery])
 
   /*
     Add markers to map from restaurants array.
@@ -175,8 +130,8 @@ const Map = ({
 
         google.maps.event.addListener(marker, "click", () => {
           marker.clicked = true
-          popup.setMap(map)
-          popup.position = marker.position
+          // popup.setMap(map)
+          // popup.position = marker.position
           setActiveRestaurantId(restaurant.place_id)
           setSelectedRestaurantId(restaurant.place_id)
         })
@@ -184,10 +139,10 @@ const Map = ({
         markers.push(marker)
       })
     }
-    if (isLoaded && restaurants.length) {
+    if (map && restaurants.length) {
       createMarkers()
     }
-  }, [isLoaded, restaurants])
+  }, [map, restaurants])
 
   /*
     Update marker icon based off of activeRestaurantId state.
@@ -207,7 +162,7 @@ const Map = ({
       })
     }
 
-    if (isLoaded) {
+    if (map) {
       setMarkerIcons(activeRestaurantId)
 
       // Hide the selected restaruant popup if a new restaurant is active
@@ -215,7 +170,7 @@ const Map = ({
         setSelectedRestaurantId(null)
       }
     }
-  }, [isLoaded, activeRestaurantId])
+  }, [map, activeRestaurantId])
 
   const getPopupItem = () => {
     const restaurant = restaurants.find(
