@@ -17,3 +17,5 @@ export interface Restaurant {
     }
   }
 }
+
+export interface PopupType extends google.maps.OverlayView {}

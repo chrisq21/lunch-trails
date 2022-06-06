@@ -1,18 +1,14 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { Restaurant } from "../../types/shared-types"
 import { MapOuterContainer, MapContainer } from "./styles"
-import { Loader, LoaderOptions } from "@googlemaps/js-api-loader"
-import useGoogleMapsApi from "../../hooks/useGoogleMapsApi"
-import usePlacesService from "../../hooks/usePlacesService"
-import { SFCoordinates } from "../../consts/map"
-import createPopupClass from "./createPopupClass"
+
 import RestaurantItem from "../restaurantItem"
 import defaultIcon from "../../assets/images/marker-default.png"
 import activeIcon from "../../assets/images/marker-active.png"
 import clickedIcon from "../../assets/images/marker-clicked.png"
+import usePopup from "../../hooks/usePopup"
 
 let markers = []
-let popup
 
 interface Props {
   google?: typeof google
@@ -32,6 +28,14 @@ const Map = ({
   setActiveRestaurantId,
 }: Props) => {
   const [selectedRestaurantId, setSelectedRestaurantId] = useState<string>(null)
+  const { popup, shouldShowPopup } = usePopup(google, map, "content")
+
+  useEffect(() => {
+    if (!shouldShowPopup) {
+      setSelectedRestaurantId(null)
+      setActiveRestaurantId(null)
+    }
+  }, [shouldShowPopup])
 
   /*
     Add markers to map from restaurants array.
@@ -56,8 +60,8 @@ const Map = ({
 
         google.maps.event.addListener(marker, "click", () => {
           marker.clicked = true
-          // popup.setMap(map)
-          // popup.position = marker.position
+          popup.setMap(map)
+          popup.position = marker.position
           setActiveRestaurantId(restaurant.place_id)
           setSelectedRestaurantId(restaurant.place_id)
         })
