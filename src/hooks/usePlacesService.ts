@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { SFCoordinates } from "../consts/map"
 
 const baseRequestOptions = {
-  location: { lat: SFCoordinates.lat, lng: SFCoordinates.lng },
   radius: 1500,
   key: process.env.GATSBY_PLACES_API_KEY,
   type: "restaurant",
@@ -12,13 +10,14 @@ const useNearbySearchService = (map, service, searchQuery = "") => {
   const [places, setPlaces] = useState([])
 
   useEffect(() => {
-    const requestOptions = {
-      ...baseRequestOptions,
-      keyword: searchQuery,
-    }
-
     if (map) {
-      const getPlaces = () => {
+      const requestOptions = {
+        ...baseRequestOptions,
+        location: map.getCenter(),
+        keyword: searchQuery,
+      }
+
+      const fetchPlaces = () => {
         try {
           let detailsPromises = []
           service.nearbySearch(requestOptions, async (places, status) => {
@@ -32,8 +31,8 @@ const useNearbySearchService = (map, service, searchQuery = "") => {
                   fields: ["website"],
                 }
 
-                const detailsPromise = new Promise((resolve) => {
-                  service.getDetails(detailsRequest, (placeDetails) => {
+                const detailsPromise = new Promise(resolve => {
+                  service.getDetails(detailsRequest, placeDetails => {
                     resolve({ ...place, ...placeDetails })
                   })
                 })
@@ -52,7 +51,7 @@ const useNearbySearchService = (map, service, searchQuery = "") => {
           // Report error.
         }
       }
-      getPlaces()
+      fetchPlaces()
     }
   }, [map, searchQuery])
 
